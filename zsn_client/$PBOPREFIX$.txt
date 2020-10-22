@@ -1,7 +1,1 @@
-///<'zsn_client.pbo' properties via Mikero's dos tools, dll version 6.44>///
 prefix=zsn_client
-Mikero=DePbo.dll.6.44
-version=19072112
-//Pbo Type is: Arma Addon
-//Sha: '7390733917898965E159A824D76099E32F2EB36D'
-//////</properties>//////
