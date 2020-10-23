@@ -9,9 +9,7 @@ if (isPlayer _unit) then {
 			};
 		};
 	};
-	if (ZSN_Autoswitch) then {
-		[_unit] call zsn_fnc_autoSwitch;
-	};
+	[_unit] call zsn_fnc_autoSwitch;
 };
 if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 	gunloopinit = false;

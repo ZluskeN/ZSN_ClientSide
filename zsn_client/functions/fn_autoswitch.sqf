@@ -7,7 +7,9 @@ _unit addEventHandler["FiredMan", {
 	if (_numOfBullets == 0) then {
 		if (_unit ammo handgunweapon _unit > 1) then {
 			if (((getpos (_unit findNearestEnemy getpos _unit)) distance (getpos _unit)) < 50) then {
-				_unit selectWeapon handgunWeapon _unit;
+				if (ZSN_Autoswitch) then {
+					_unit selectWeapon handgunWeapon _unit;
+				};
 			};
 		};
 	};
