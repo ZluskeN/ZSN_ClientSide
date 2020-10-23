@@ -19,7 +19,7 @@ pipeline {
                 }
 
                 bat 'build.bat' 
-                archiveArtifacts artifacts: '@zsn_surrender/**/*'
+                archiveArtifacts artifacts: '@zsn_client/**/*'
             }
             post {
                 always {
