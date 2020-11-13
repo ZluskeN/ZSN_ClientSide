@@ -1,11 +1,11 @@
 private _unit = _this select 0;
-_threshold = ZSN_MGstanceThreshold;
-_inertia = getNumber (configFile >> "CfgWeapons" >> primaryweapon _unit >> "inertia");
-if (_inertia >= _threshold && !gunloopinit) then { 
-	gunloopinit = true;
-	waituntil {stance _unit == "STAND"}; 
+private _threshold = ZSN_MGstanceThreshold;
+private _inertia = getNumber (configFile >> "CfgWeapons" >> primaryweapon _unit >> "inertia");
+if (_inertia >= _threshold && !zsn_gunloopinit) then { 
+	zsn_gunloopinit = true;
+	waituntil {(stance _unit == "STAND") && (currentweapon _unit == primaryweapon _unit)}; 
 	_unit playAction "toMachinegun"; 
-	waituntil {stance _unit != "STAND"}; 
-	gunloopinit = false;
-	[_unit, gunloopinit] spawn zsn_fnc_mgstance; 
+	waituntil {(stance _unit != "STAND") OR (currentweapon _unit != primaryweapon _unit)}; 
+	zsn_gunloopinit = false;
+	[_unit] spawn zsn_fnc_mgstance; 
 }; 

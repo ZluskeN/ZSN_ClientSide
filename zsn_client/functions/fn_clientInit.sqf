@@ -12,12 +12,12 @@ if (isPlayer _unit) then {
 	[_unit] call zsn_fnc_autoSwitch;
 };
 if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
-	gunloopinit = false;
+	zsn_gunloopinit = false;
 	_unit addEventHandler ["InventoryClosed", { 
 		private _unit = _this select 0;
-		[_unit, gunloopinit] spawn zsn_fnc_mgstance;
+		[_unit] spawn zsn_fnc_mgstance;
 	}];
-	[_unit, gunloopinit] spawn zsn_fnc_mgstance;
+	[_unit] spawn zsn_fnc_mgstance;
 };
 if (ZSN_RemoveMaps) then  {
 	if (isClass(configFile >> "CfgPatches" >> "RR_mapStuff")) then {

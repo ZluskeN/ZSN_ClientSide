@@ -14,4 +14,4 @@ if (isClass(configFile >> "CfgPatches" >> "ace_arsenal") && !ZSN_VanillaArsenal)
 
 ["ZluskeN", "RandomWeapon", "Give player a random weapon", {player call zsn_fnc_randomweapon}, {}] call cba_fnc_addKeybind;
 
-["ZluskeN", "Squat_Like_Slav", "Squat (Like Slav)", {player selectWeapon handgunWeapon player; player playmove "Acts_Executioner_Squat"; player playmove "Acts_Executioner_ToPistol"}, {}, [DIK_APPS,[false,false,false]]] call cba_fnc_addKeybind;
+["ZluskeN", "Squat_Like_Slav", "Squat (Like Slav)", {if (side player == EAST) then {player selectWeapon handgunWeapon player; player playmove "Acts_Executioner_Squat"; player playmove "Acts_Executioner_ToPistol";}}, {}, [DIK_APPS,[false,false,false]]] call cba_fnc_addKeybind;
