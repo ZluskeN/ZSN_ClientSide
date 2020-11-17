@@ -24,6 +24,13 @@ class Extended_PreInit_EventHandlers
         init = "call compile preprocessFileLineNumbers 'zsn_client\XEH_preInit.sqf'";
     };
 };
+class Extended_PostInit_EventHandlers
+{
+	class zsn_server_init
+	{
+		init = "_this call zsn_fnc_serverinit";
+	};
+};
 class Extended_InitPost_EventHandlers
 {
 	class CAManBase
@@ -51,6 +58,10 @@ class CfgFunctions
 			class clientInit
 			{
 				file = "\zsn_client\functions\fn_clientInit.sqf";
+			};
+			class serverInit
+			{
+				file = "\zsn_client\functions\fn_serverInit.sqf";
 			};
 			class autoSwitch
 			{
