@@ -23,4 +23,15 @@ if (isServer) then {
 			};
 		} forEach allUnits;
 	}];
+	if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
+		["ace_unconscious", { // global event (runs on all machines)
+			params ["_unit", "_isUnconscious"];
+			if (_isUnconscious) then {
+				_unit call zsn_fnc_dropweapon;
+				if (isPlayer _unit) then {
+					remoteexec ["zsn_fnc_spectator", _unit];
+				};
+			};
+		}] call CBA_fnc_addEventHandler;
+	};
 };

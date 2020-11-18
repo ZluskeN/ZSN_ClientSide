@@ -87,6 +87,10 @@ class CfgFunctions
 			{
 				file = "\zsn_client\functions\fn_mgstance.sqf";
 			};
+			class spectator
+			{
+				file = "\zsn_client\functions\fn_spectator.sqf";
+			};
 		};
 	};
 };
