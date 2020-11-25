@@ -7,7 +7,19 @@ if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 	}];
 	[_unit] spawn zsn_fnc_mgstance;
 };
-	
+
 if (hasinterface) then {
-	[_unit] call zsn_fnc_autoSwitch;
+	_unit addEventHandler["FiredMan", {
+		_unit = _this select 0;
+		_numOfBullets = (weaponState _unit) select 4; // Get the amount of bullets left in the magazine
+		if (_numOfBullets == 0) then {
+			if (ZSN_Autoswitch) then {
+				if (_unit ammo handgunweapon _unit > 1) then {
+					if (((getpos (_unit findNearestEnemy getpos _unit)) distance (getpos _unit)) < 50) then {
+						_unit selectWeapon handgunWeapon _unit;
+					};
+				};
+			};
+		};
+	}];
 };
