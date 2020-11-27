@@ -1,4 +1,6 @@
 params ["_unit"];
+_unit setUnitPosWeak "UP";
+if (leader _unit != _unit) then {_unit setCombatMode "WHITE"};
 if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 	zsn_gunloopinit = false;
 	_unit addEventHandler ["InventoryClosed", { 
@@ -7,7 +9,6 @@ if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 	}];
 	[_unit] spawn zsn_fnc_mgstance;
 };
-
 if (hasinterface) then {
 	_unit addEventHandler["FiredMan", {
 		_unit = _this select 0;
