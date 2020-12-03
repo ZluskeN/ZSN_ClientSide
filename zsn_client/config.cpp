@@ -48,7 +48,7 @@ class Extended_InitPost_EventHandlers
 		};
 		class zsn_client_init
 		{
-			init = "_this call zsn_fnc_clientinit";
+			init = "_this select 0 call zsn_fnc_clientinit";
 		};
 	};
 };
@@ -70,10 +70,6 @@ class CfgFunctions
 			{
 				file = "\zsn_client\functions\fn_serverInit.sqf";
 			};
-			class autoSwitch
-			{
-				file = "\zsn_client\functions\fn_autoswitch.sqf";
-			};
 			class addArsenal
 			{
 				file = "\zsn_client\functions\fn_addarsenal.sqf";
@@ -94,13 +90,21 @@ class CfgFunctions
 			{
 				file = "\zsn_client\functions\fn_clearWeapon.sqf";
 			};
-			class mgstance
+			class mgStance
 			{
 				file = "\zsn_client\functions\fn_mgstance.sqf";
 			};
-			class spectator
+			class Spectator
 			{
 				file = "\zsn_client\functions\fn_spectator.sqf";
+			};
+			class addTripod
+			{
+				file = "\zsn_client\functions\fn_addtripod.sqf";
+			};
+			class removeMaps
+			{
+				file = "\zsn_client\functions\fn_removemaps.sqf";
 			};
 		};
 	};
