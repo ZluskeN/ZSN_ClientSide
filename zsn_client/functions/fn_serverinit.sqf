@@ -9,10 +9,14 @@ if (isServer) then {
 			};
 		}] call CBA_fnc_addEventHandler;
 	};
+	ZSN_Serverfirstrun = true;
 	addMissionEventHandler ["PreloadFinished", {
-		if (isClass(configFile >> "CfgPatches" >> "RR_mapStuff") && ZSN_RemoveMaps) then {
-			{player call zsn_fnc_removemaps;} remoteExecCall ["bis_fnc_call", 0, true];
+		if (ZSN_Serverfirstrun) then {
+			if (isClass(configFile >> "CfgPatches" >> "RR_mapStuff") && ZSN_RemoveMaps) then {
+				{player call zsn_fnc_removemaps;} remoteExecCall ["bis_fnc_call", 0, true];
+			};
+			remoteExecCall ["zsn_fnc_clearweapon", 0, true];
+			ZSN_Serverfirstrun = false;
 		};
-		remoteExecCall ["zsn_fnc_clearweapon", 0, true];
 	}];
 };
