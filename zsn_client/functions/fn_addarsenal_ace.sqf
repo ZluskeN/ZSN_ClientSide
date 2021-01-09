@@ -1,6 +1,6 @@
 if (ZSN_AllowArsenal) then {
 	params [
-		["_box",""],
+		["_box",[cursortarget]],
 		["_fact",[faction player]],
 		["_ea",[]]
 	];

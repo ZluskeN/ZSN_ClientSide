@@ -44,7 +44,7 @@ class Extended_InitPost_EventHandlers
 	{
 		class zsn_keybind_init
 		{
-			init = "nul = [] execVM 'zsn_client\fn_keyBinds.sqf'";
+			init = "nul = [] execVM 'zsn_client\functions\fn_keyBinds.sqf'";
 		};
 		class zsn_client_init
 		{
@@ -101,10 +101,6 @@ class CfgFunctions
 			class addTripod
 			{
 				file = "\zsn_client\functions\fn_addtripod.sqf";
-			};
-			class removeMaps
-			{
-				file = "\zsn_client\functions\fn_removemaps.sqf";
 			};
 		};
 	};
