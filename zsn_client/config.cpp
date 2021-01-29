@@ -102,6 +102,10 @@ class CfgFunctions
 			{
 				file = "\zsn_client\functions\fn_addtripod.sqf";
 			};
+			class armorShake
+			{
+				file = "\zsn_client\functions\fn_armorShake.sqf";
+			};
 		};
 	};
 };

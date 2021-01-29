@@ -1,5 +1,21 @@
 params ["_unit"];
 _unit setUnitPosWeak "UP";
+_unit addEventHandler["FiredMan", {
+	_unit = _this select 0;
+	_numOfBullets = (weaponState _unit) select 4;
+	if (_numOfBullets == 0) then {
+		if (ZSN_Autoswitch) then {
+			if (_unit ammo handgunweapon _unit > 1 && handgunweapon _unit != "hgun_Pistol_Signal_F") then {
+				if (((getpos (_unit findNearestEnemy getpos _unit)) distance (getpos _unit)) < 50) then {
+					_unit selectWeapon handgunWeapon _unit;
+				};
+			};
+		};
+	};
+}];
+if (isClass(configFile >> "CfgPatches" >> "dzn_MG_Tripod") && ZSN_AddTripod) then { 
+	_unit call zsn_fnc_addtripod;
+};
 if (leader _unit == _unit) then {
 	_unit setCombatMode ZSN_CombatMode;
 } else {
@@ -15,24 +31,10 @@ if (leader _unit == _unit) then {
 		};
 	};
 };
-if (isClass(configFile >> "CfgPatches" >> "dzn_MG_Tripod") && ZSN_AddTripod) then { 
-	_unit call zsn_fnc_addtripod;
-};
 if (isPlayer _unit && hasinterface) then {
-	call zsn_fnc_clearweapon;
-	_unit addEventHandler["FiredMan", {
-		_unit = _this select 0;
-		_numOfBullets = (weaponState _unit) select 4;
-		if (_numOfBullets == 0) then {
-			if (ZSN_Autoswitch) then {
-				if (_unit ammo handgunweapon _unit > 1) then {
-					if (((getpos (_unit findNearestEnemy getpos _unit)) distance (getpos _unit)) < 50) then {
-						_unit selectWeapon handgunWeapon _unit;
-					};
-				};
-			};
-		};
-	}];
+	if (ZSN_Clearweapon) then {[] call zsn_fnc_clearweapon};
+	if (ZSN_Jukebox) then {[] call BIS_fnc_jukebox};
+	_unit spawn zsn_fnc_armorshake;
 } else {
 	if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 		_unit setvariable ["zsn_gunloopinit", false];
