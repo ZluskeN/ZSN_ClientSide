@@ -106,6 +106,10 @@ class CfgFunctions
 			{
 				file = "\zsn_client\functions\fn_armorShake.sqf";
 			};
+			class squat
+			{
+				file = "\zsn_client\functions\fn_squat.sqf";
+			};
 		};
 	};
 };

@@ -13,6 +13,9 @@ _unit addEventHandler["FiredMan", {
 		};
 	};
 }];
+if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine") && ZSN_MedicFacility) then {
+	if (_unit getUnitTrait "Medic") then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
+};
 if (isClass(configFile >> "CfgPatches" >> "dzn_MG_Tripod") && ZSN_AddTripod) then { 
 	_unit call zsn_fnc_addtripod;
 };
@@ -32,9 +35,12 @@ if (leader _unit == _unit) then {
 	};
 };
 if (isPlayer _unit && hasinterface) then {
-	if (ZSN_Clearweapon) then {[] call zsn_fnc_clearweapon};
-	if (ZSN_Jukebox) then {[] call BIS_fnc_jukebox};
 	_unit spawn zsn_fnc_armorshake;
+	if (ZSN_Jukebox) then {[] call BIS_fnc_jukebox};
+	if (ZSN_Clearweapon) then {[] call zsn_fnc_clearweapon};
+	if (isClass(configFile >> "CfgPatches" >> "AGC") && ZSN_AGCPlayers) then {
+		removeFromRemainsCollector [_unit];
+	};
 } else {
 	if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 		_unit setvariable ["zsn_gunloopinit", false];
