@@ -3,13 +3,17 @@ if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 	["ZluskeN", "Lower_MG", "Lower Machine Gun", {if (getNumber (configFile >> "CfgWeapons" >> primaryweapon player >> "inertia") >= ZSN_MGstanceThreshold) then {player playAction "toMachinegun"}}, {}] call cba_fnc_addKeybind;
 };
 
+if (isClass(configFile >> "CfgPatches" >> "RR_mapStuff")) then {
+	["ZluskeN", "Place_Map", "Put Map on Ground", {if ("ItemMap" in assigneditems player) then {call RR_mapStuff_fnc_mapPut}}, {}] call cba_fnc_addKeybind;
+};
+
 if (isClass(configFile >> "CfgPatches" >> "ace_hitreactions")) then {
 	["ZluskeN", "Drop_Weapon", "Drop Weapon", {player call ace_hitreactions_fnc_throwWeapon}, {}] call cba_fnc_addKeybind;
 } else {
 	["ZluskeN", "Drop_Weapon", "Drop Weapon", {player call zsn_fnc_dropweapon}, {}] call cba_fnc_addKeybind;
 };
 
-if (isClass(configFile >> "CfgPatches" >> "ace_arsenal") && !ZSN_VanillaArsenal) then {
+if (isClass(configFile >> "CfgPatches" >> "ace_arsenal")) then {
 	["ZluskeN", "Add_Arsenal", "Create faction arsenal", {[("Land_HelipadEmpty_F" createVehicle position player)] call zsn_fnc_addarsenal_ace}, {}] call cba_fnc_addKeybind;
 } else {
 	["ZluskeN", "Add_Arsenal", "Create faction arsenal", {[("Land_Ammobox_rounds_F" createVehicle position player)] call zsn_fnc_addarsenal}, {}] call cba_fnc_addKeybind;

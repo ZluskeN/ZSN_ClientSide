@@ -8,6 +8,9 @@ if (isServer) then {
 				};
 			};
 		}] call CBA_fnc_addEventHandler;
+		{
+			if ([_x] call ace_medical_treatment_fnc_isMedicalVehicle) then {_x addItemCargoGlobal ['ace_PersonalAidKit', 1]}
+		} foreach vehicles;
 	};
 	if (isClass(configFile >> "CfgPatches" >> "AGC") && ZSN_AGCPlayers) then {
 		addMissionEventHandler ["EntityKilled", {

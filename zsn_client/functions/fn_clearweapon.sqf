@@ -1,7 +1,8 @@
-if (currentWeapon player isKindOf ["Rifle_Base_F", configFile >> "CfgWeapons"]) then {
-	_magtype = currentmagazine player;  
-	if (player canAdd _magtype) then {
-		player addmagazine [_magtype, 999];
-		player removePrimaryWeaponItem _magtype;
+params ["_unit"];
+if (currentWeapon _unit isKindOf ["Rifle_Base_F", configFile >> "CfgWeapons"]) then {
+	_magtype = currentmagazine _unit;  
+	if (_unit canAdd _magtype) then {
+		_unit addmagazine [_magtype, 999];
+		_unit removePrimaryWeaponItem _magtype;
 	};
 };

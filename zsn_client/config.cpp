@@ -48,7 +48,7 @@ class Extended_InitPost_EventHandlers
 		};
 		class zsn_client_init
 		{
-			init = "_this select 0 call zsn_fnc_clientinit";
+			init = "if (isServer) then {_this RemoteExecCall ['zsn_fnc_clientinit', _this select 0, true]};";
 		};
 	};
 };
@@ -90,6 +90,10 @@ class CfgFunctions
 			{
 				file = "\zsn_client\functions\fn_clearWeapon.sqf";
 			};
+			class chambered
+			{
+				file = "\zsn_client\functions\fn_chambered.sqf";
+			};
 			class mgStance
 			{
 				file = "\zsn_client\functions\fn_mgstance.sqf";
@@ -109,6 +113,10 @@ class CfgFunctions
 			class squat
 			{
 				file = "\zsn_client\functions\fn_squat.sqf";
+			};
+			class medicalItems
+			{
+				file = "\zsn_client\functions\fn_medicalItems.sqf";
 			};
 		};
 	};
