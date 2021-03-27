@@ -14,7 +14,14 @@ class CfgPatches
 		units[] = {};
 		weapons[] = {};
 		requiredVersion = 1;
-		requiredAddons[] = {};
+		requiredAddons[] = 
+		{
+			"cba_xeh",
+			"cba_main",
+			"cba_common",
+			"cba_settings",
+			"A3_anims_f"
+		};
 	};
 };
 class Extended_PreInit_EventHandlers 
