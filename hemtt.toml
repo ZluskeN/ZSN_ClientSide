@@ -1,0 +1,13 @@
+name = "ZluskeN Client Side"
+prefix = "zsn"
+modname = "zsn_client"
+version = "0.0.0"
+author = "ZluskeN"
+files = [
+    "baselogo.paa",
+    "mod.cpp",
+]
+key_name = "zsn"
+reuse_private_key = true
+authority = "zsn"
+sig_version = 3
