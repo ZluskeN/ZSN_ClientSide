@@ -1,6 +1,6 @@
-name = "ZluskeN Loadouts";
+name = "ZluskeN Client Side";
 logo = "baselogo.paa";
 logoOver = "baselogo.paa";
 hidePicture = "false";
 hideName = "false";
-description = "Loadout mod for vanilla units";
+description = "Client Side additions";

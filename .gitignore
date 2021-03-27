@@ -19,5 +19,6 @@ Desktop.ini
 *.bikey
 *.biprivatekey
 *.bisign
-fn_autoswitch.sqf
-XEH_postInit.sqf
+
+# hemtt releases folder
+releases/
