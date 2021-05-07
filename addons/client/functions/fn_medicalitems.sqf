@@ -5,6 +5,7 @@ params ["_unit"];
 	};
 } forEach items _unit;
 if ([_unit] call ace_common_fnc_isMedic) then {
+	if (backpack _unit == "") then {_unit addbackpack "B_FieldPack_khk"};
 	{	
 		if (_unit canAddItemToBackpack _x) then {_unit addItemToBackpack _x} else {_unit addItem _x};
 	} forEach [

@@ -40,13 +40,6 @@ class Extended_PostInit_EventHandlers
 };
 class Extended_InitPost_EventHandlers
 {
-	class Allvehicles
-	{
-		class zsn_disableTI
-		{
-			init = "_this select 0 disableTIEquipment ZSN_DisableTI";
-		};
-	};
 	class CAManBase
 	{
 		class zsn_keybind_init
@@ -124,6 +117,10 @@ class CfgFunctions
 			class medicalItems
 			{
 				file = "\zsn_client\functions\fn_medicalItems.sqf";
+			};
+			class disableNVG
+			{
+				file = "\zsn_client\functions\fn_disableNVG.sqf";
 			};
 		};
 	};

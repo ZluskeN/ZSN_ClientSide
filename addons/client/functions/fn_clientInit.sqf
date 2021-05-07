@@ -1,9 +1,7 @@
 params ["_unit"];
 
-_unit setUnitPosWeak "UP";
-
 if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
-	if (_unit getUnitTrait "Medic" && ZSN_MedicFacility) then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
+	if (ZSN_MedicFacility && [_unit] call ace_common_fnc_isMedic) then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
 	if (ZSN_MedicalItems) then {_unit call zsn_fnc_medicalItems};
 };
 
@@ -26,17 +24,15 @@ if (leader _unit != _unit) then {
 
 if (isPlayer _unit && hasinterface) then {
 
-	if (ZSN_Clearweapon) then {_unit call zsn_fnc_clearweapon};
-	
-	_unit call zsn_fnc_chambered;
-	
 	_unit spawn zsn_fnc_armorshake;
 	
-	if (ZSN_Jukebox) then {[] call BIS_fnc_jukebox};
+	if (ZSN_Clearweapon) then {_unit call zsn_fnc_clearweapon};
 	
 	if (isClass(configFile >> "CfgPatches" >> "AGC") && ZSN_AGCPlayers) then {removeFromRemainsCollector [_unit]};
 	
 } else {
+
+	_unit setUnitPosWeak ZSN_Unitpos;
 
 	if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 		_unit setvariable ["zsn_gunloopinit", false];

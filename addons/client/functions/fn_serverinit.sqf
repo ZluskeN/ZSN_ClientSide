@@ -1,4 +1,5 @@
 if (isServer) then {
+	if (ZSN_DisableTI) then {[] spawn zsn_fnc_disableNVG};
 	if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
 		["ace_unconscious", {
 			params ["_unit", "_isUnconscious"];
@@ -8,9 +9,11 @@ if (isServer) then {
 				};
 			};
 		}] call CBA_fnc_addEventHandler;
-		{
-			if ([_x] call ace_medical_treatment_fnc_isMedicalVehicle) then {_x addItemCargoGlobal ['ace_PersonalAidKit', 1]}
-		} foreach vehicles;
+		if (ZSN_MedicalItems) then {
+			{
+				if ([_x] call ace_medical_treatment_fnc_isMedicalVehicle) then {_x addItemCargoGlobal ['ace_PersonalAidKit', 1]}
+			} foreach vehicles;
+		};
 	};
 	if (isClass(configFile >> "CfgPatches" >> "AGC") && ZSN_AGCPlayers) then {
 		addMissionEventHandler ["EntityKilled", {
