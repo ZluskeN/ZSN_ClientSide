@@ -104,5 +104,10 @@
 					};
 				};
 			};
+		} else {
+			switch (_muzzle) do {
+				case (primaryweapon _unit): {ZSN_PrimaryChambered = true};
+				case (handgunweapon _unit): {ZSN_HandgunChambered = true};
+			};
 		};
 	}];

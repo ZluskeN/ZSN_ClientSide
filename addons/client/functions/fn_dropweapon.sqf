@@ -1,7 +1,7 @@
 params ["_unit","_weapons","_wpi","_weapon","_wh","_offset","_vel","_dir","_speed"];
 _weapons = weaponsItems _unit;
 _wpi = _weapons findIf {_x select 0 == currentweapon _unit};
-if ((_wpi >= 0) && (isNull objectParent player)) then {
+if ((_wpi >= 0) && (isNull objectParent _unit)) then {
 	_weapon = _weapons select _wpi;
 	_wh = createVehicle ["WeaponHolderSimulated", [0, 0, 0], [], 0, "CAN_COLLIDE"];
 	_wh addWeaponWithAttachmentsCargoGlobal [_weapon, 1];
