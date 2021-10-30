@@ -25,11 +25,15 @@ if (leader _unit != _unit) then {
 if (isPlayer _unit && hasinterface) then {
 
 	_unit spawn zsn_fnc_armorshake;
-	
+
+	zsn_startammo = _unit call zsn_fnc_playerammo; 
+
+	_unit spawn zsn_fnc_ammoloop;
+
 	if (ZSN_Clearweapon) then {_unit call zsn_fnc_clearweapon};
-	
+
 	if (isClass(configFile >> "CfgPatches" >> "AGC") && ZSN_AGCPlayers) then {removeFromRemainsCollector [_unit]};
-	
+
 } else {
 
 	_unit setUnitPosWeak ZSN_Unitpos;
@@ -38,7 +42,7 @@ if (isPlayer _unit && hasinterface) then {
 		_unit setvariable ["zsn_gunloopinit", false];
 		[_unit] spawn zsn_fnc_mgstance;
 	};
-	
+
 	if (isClass(configFile >> "CfgPatches" >> "ace_weaponselect")) then {
 		if (currentWeapon _unit == handGunWeapon _unit) then {
 			_unit spawn {

@@ -1,12 +1,13 @@
 	params ["_unit"];
-	
+
 	ZSN_PrimaryChambered = false;
 	ZSN_HandgunChambered = false;
+	
 	_primaryweapon = primaryweapon _unit;
 	_primaryammo = _unit ammo _primaryweapon;
 	_primarymagazine = primaryWeaponMagazine _unit select 0;
-	_isBelt = isNumber (configFile >> "CfgMagazines" >> _primarymagazine >> "ACE_isBelt") && {(getNumber (configFile >> "CfgMagazines" >> _primarymagazine >> "ACE_isBelt")) == 1};
-	if (_primaryammo > 6 && !_isBelt) then {
+	_primaryisopenbolt = [_primarymagazine, _primaryweapon, _primaryammo] call zsn_fnc_isopenbolt;
+	if (!_primaryisopenbolt) then {
 		_newcount = _primaryammo - 1;
 		if (_newcount > 0) then {
 			_unit setAmmo [_primaryweapon, _newcount];
@@ -17,35 +18,50 @@
 	_handgunweapon = handgunweapon _unit;
 	_handgunammo = _unit ammo _handgunweapon;
 	_handgunmagazine = handgunMagazine _unit select 0;
-	_isBelt = isNumber (configFile >> "CfgMagazines" >> _handgunmagazine >> "ACE_isBelt") && {(getNumber (configFile >> "CfgMagazines" >> _handgunmagazine >> "ACE_isBelt")) == 1};
-	if (_handgunammo > 6 && !_isBelt) then {
+	_handgunisopenbolt = [_handgunmagazine, _handgunweapon, _handgunammo] call zsn_fnc_isopenbolt;
+	if (!_handgunisopenbolt) then {
 		_newcount = _handgunammo - 1;
 		if (_newcount > 0) then {
 			_unit setAmmo [_handgunweapon, _newcount];
 			ZSN_HandgunChambered = true;
 		};
 	};
-
+	
+	ZSN_PrimaryWeapon = _primaryweapon;
+	ZSN_HandgunWeapon = _handgunweapon;
+	
+	ZSN_PrimaryOpenBolt = _primaryisopenbolt;
+	ZSN_HandgunOpenBolt = _handgunisopenbolt;
+	
 	_unit addEventHandler["Reloaded", {
 		_unit = _this select 0;
 		_weapon = _this select 1;
 		_muzzle = _this select 2;
+		if (_muzzle != _weapon) exitwith {};
 		_newmagtype = _this select 3 select 0;
 		_newmagammo = _this select 3 select 1;
 		_oldmagtype = _this select 4 select 0;
 		_oldmagammo = _this select 4 select 1;
+		_rounds = getNumber (configFile >> "CfgMagazines" >> _newmagtype >> "count");
+		_isopenbolt = switch (_muzzle) do {
+			case (ZSN_PrimaryWeapon): {ZSN_PrimaryOpenBolt};
+			case (ZSN_HandgunWeapon): {ZSN_HandgunOpenBolt};
+			default {[_newmagtype, _muzzle, _rounds] call zsn_fnc_isopenbolt};
+		};
 		_chambered = switch (_muzzle) do {
 			case (primaryweapon _unit): {ZSN_PrimaryChambered};
 			case (handgunweapon _unit): {ZSN_HandgunChambered};
 			default {false};
 		};
-		_rounds = getNumber (configFile >> "CfgMagazines" >> _newmagtype >> "count");
-		_isBelt = isNumber (configFile >> "CfgMagazines" >> _newmagtype >> "ACE_isBelt") && {(getNumber (configFile >> "CfgMagazines" >> _newmagtype >> "ACE_isBelt")) == 1};
-		if (!_chambered && (_rounds > 6 && !_isBelt)) then {
+		if (!_chambered && !_isopenbolt) then {
 			if (count _this == 4) then {
 				_newcount = _newmagammo - 1;
 				if (_newcount > 0) then {
 					_unit setAmmo [_muzzle, _newcount];
+					switch (_muzzle) do {
+						case (primaryweapon _unit): {ZSN_PrimaryChambered = true};
+						case (handgunweapon _unit): {ZSN_HandgunChambered = true};
+					};
 				} else {
 					switch (_muzzle) do {
 						case (primaryweapon _unit): {ZSN_PrimaryChambered = false};
@@ -83,17 +99,22 @@
 		_unit = _this select 0;
 		_weapon = _this select 1;
 		_muzzle = _this select 2;
+		if (_muzzle != _weapon) exitwith {};
 		_numOfBullets = (weaponState _unit) select 4;
 		_magtype = _this select 5;
+		_rounds = getNumber (configFile >> "CfgMagazines" >> _magtype >> "count");
+		_isopenbolt = switch (_muzzle) do {
+			case (ZSN_PrimaryWeapon): {ZSN_PrimaryOpenBolt};
+			case (ZSN_HandgunWeapon): {ZSN_HandgunOpenBolt};
+			default {[_newmagtype, _muzzle, _rounds] call zsn_fnc_isopenbolt};
+		};
 		_chambered = switch (_muzzle) do {
 			case (primaryweapon _unit): {ZSN_PrimaryChambered};
 			case (handgunweapon _unit): {ZSN_HandgunChambered};
 			default {false};
 		};
-		_rounds = getNumber (configFile >> "CfgMagazines" >> _magtype >> "count");
-		_isBelt = isNumber (configFile >> "CfgMagazines" >> _magtype >> "ACE_isBelt") && {(getNumber (configFile >> "CfgMagazines" >> _magtype >> "ACE_isBelt")) == 1};
 		if (_numOfBullets == 0) then {
-			if (_chambered && (_rounds > 6 && !_isBelt)) then {
+			if (_chambered && !_isopenbolt) then {
 				_unit setAmmo [_muzzle, 1];
 				_unit setWeaponReloadingTime [_unit, _muzzle, 1];
 				switch (_muzzle) do {
