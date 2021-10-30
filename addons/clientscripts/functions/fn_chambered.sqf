@@ -1,38 +1,43 @@
-	params ["_unit"];
+params ["_unit"];
+
+_primaryweaponcleared = false;
+_primaryweapon = primaryweapon _unit;
+_primaryammo = _unit ammo _primaryweapon;
+_primarymagazine = primaryWeaponMagazine _unit select 0;
+if (ZSN_Clearweapon && (_unit canAdd _primarymagazine && isNull objectParent _unit)) then {
+	_unit addmagazine [_primarymagazine, _primaryammo];
+	_unit removePrimaryWeaponItem _primarymagazine;
+	_primaryweaponcleared = true;
+};
+
+if (ZSN_Chamberedgun) then {
 
 	ZSN_PrimaryChambered = false;
 	ZSN_HandgunChambered = false;
 	
-	_primaryweapon = primaryweapon _unit;
-	_primaryammo = _unit ammo _primaryweapon;
-	_primarymagazine = primaryWeaponMagazine _unit select 0;
 	_primaryisopenbolt = [_primarymagazine, _primaryweapon, _primaryammo] call zsn_fnc_isopenbolt;
-	if (!_primaryisopenbolt) then {
+	if (!_primaryweaponcleared && !_primaryisopenbolt) then {
 		_newcount = _primaryammo - 1;
-		if (_newcount > 0) then {
-			_unit setAmmo [_primaryweapon, _newcount];
-			ZSN_PrimaryChambered = true;
-		};
+		_unit setAmmo [_primaryweapon, _newcount];
+		ZSN_PrimaryChambered = true;
 	};
-	
+
 	_handgunweapon = handgunweapon _unit;
 	_handgunammo = _unit ammo _handgunweapon;
 	_handgunmagazine = handgunMagazine _unit select 0;
 	_handgunisopenbolt = [_handgunmagazine, _handgunweapon, _handgunammo] call zsn_fnc_isopenbolt;
 	if (!_handgunisopenbolt) then {
 		_newcount = _handgunammo - 1;
-		if (_newcount > 0) then {
-			_unit setAmmo [_handgunweapon, _newcount];
-			ZSN_HandgunChambered = true;
-		};
+		_unit setAmmo [_handgunweapon, _newcount];
+		ZSN_HandgunChambered = true;
 	};
-	
+
 	ZSN_PrimaryWeapon = _primaryweapon;
 	ZSN_HandgunWeapon = _handgunweapon;
-	
+
 	ZSN_PrimaryOpenBolt = _primaryisopenbolt;
 	ZSN_HandgunOpenBolt = _handgunisopenbolt;
-	
+
 	_unit addEventHandler["Reloaded", {
 		_unit = _this select 0;
 		_weapon = _this select 1;
@@ -137,3 +142,4 @@
 			};
 		};
 	}];
+};

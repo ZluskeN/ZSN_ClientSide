@@ -1,5 +1,7 @@
 params ["_unit","_currentammo","_supplyboxes","_deadboxes","_compatiblemags","_box","_magazinesinbox","_compatiblemagsinbox"];
 
+zsn_startammo = _unit call zsn_fnc_playerammo; 
+
 while {alive _unit} do {
 	if (ZSN_AutoRearm) then {
 		_currentammo = _unit call zsn_fnc_playerammo;
