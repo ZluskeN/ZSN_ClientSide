@@ -1,9 +1,12 @@
 params ["_unit"];
 
+zsn_startammo = _unit call zsn_fnc_playerammo; 
+
 _primaryweaponcleared = false;
 _primaryweapon = primaryweapon _unit;
 _primaryammo = _unit ammo _primaryweapon;
 _primarymagazine = primaryWeaponMagazine _unit select 0;
+
 if (ZSN_Clearweapon && (_unit canAdd _primarymagazine && isNull objectParent _unit)) then {
 	_unit addmagazine [_primarymagazine, _primaryammo];
 	_unit removePrimaryWeaponItem _primarymagazine;
@@ -15,7 +18,8 @@ if (ZSN_Chamberedgun) then {
 	ZSN_PrimaryChambered = false;
 	ZSN_HandgunChambered = false;
 	
-	_primaryisopenbolt = [_primarymagazine, _primaryweapon, _primaryammo] call zsn_fnc_isopenbolt;
+	_primarymagazine = if (_primaryammo == 0) then {getArray (configFile >> "CfgWeapons" >> _primaryweapon >> "magazines") select 0} else {_primarymagazine};
+	_primaryisopenbolt = [_primarymagazine, _primaryweapon] call zsn_fnc_isopenbolt;
 	if (!_primaryweaponcleared && !_primaryisopenbolt) then {
 		_newcount = _primaryammo - 1;
 		_unit setAmmo [_primaryweapon, _newcount];
@@ -25,7 +29,9 @@ if (ZSN_Chamberedgun) then {
 	_handgunweapon = handgunweapon _unit;
 	_handgunammo = _unit ammo _handgunweapon;
 	_handgunmagazine = handgunMagazine _unit select 0;
-	_handgunisopenbolt = [_handgunmagazine, _handgunweapon, _handgunammo] call zsn_fnc_isopenbolt;
+	
+	_handgunmagazine = if (_handgunammo == 0) then {getArray (configFile >> "CfgWeapons" >> _handgunweapon >> "magazines") select 0} else {_handgunmagazine};
+	_handgunisopenbolt = [_handgunmagazine, _handgunweapon] call zsn_fnc_isopenbolt;
 	if (!_handgunisopenbolt) then {
 		_newcount = _handgunammo - 1;
 		_unit setAmmo [_handgunweapon, _newcount];
@@ -47,11 +53,10 @@ if (ZSN_Chamberedgun) then {
 		_newmagammo = _this select 3 select 1;
 		_oldmagtype = _this select 4 select 0;
 		_oldmagammo = _this select 4 select 1;
-		_rounds = getNumber (configFile >> "CfgMagazines" >> _newmagtype >> "count");
 		_isopenbolt = switch (_muzzle) do {
 			case (ZSN_PrimaryWeapon): {ZSN_PrimaryOpenBolt};
 			case (ZSN_HandgunWeapon): {ZSN_HandgunOpenBolt};
-			default {[_newmagtype, _muzzle, _rounds] call zsn_fnc_isopenbolt};
+			default {[_newmagtype, _muzzle] call zsn_fnc_isopenbolt};
 		};
 		_chambered = switch (_muzzle) do {
 			case (primaryweapon _unit): {ZSN_PrimaryChambered};
@@ -107,11 +112,10 @@ if (ZSN_Chamberedgun) then {
 		if (_muzzle != _weapon) exitwith {};
 		_numOfBullets = (weaponState _unit) select 4;
 		_magtype = _this select 5;
-		_rounds = getNumber (configFile >> "CfgMagazines" >> _magtype >> "count");
 		_isopenbolt = switch (_muzzle) do {
 			case (ZSN_PrimaryWeapon): {ZSN_PrimaryOpenBolt};
 			case (ZSN_HandgunWeapon): {ZSN_HandgunOpenBolt};
-			default {[_newmagtype, _muzzle, _rounds] call zsn_fnc_isopenbolt};
+			default {[_newmagtype, _muzzle] call zsn_fnc_isopenbolt};
 		};
 		_chambered = switch (_muzzle) do {
 			case (primaryweapon _unit): {ZSN_PrimaryChambered};

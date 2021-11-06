@@ -1,7 +1,5 @@
 params ["_unit","_currentammo","_supplyboxes","_deadboxes","_compatiblemags","_box","_magazinesinbox","_compatiblemagsinbox"];
 
-zsn_startammo = _unit call zsn_fnc_playerammo; 
-
 while {alive _unit} do {
 	if (ZSN_AutoRearm) then {
 		_currentammo = _unit call zsn_fnc_playerammo;
@@ -37,7 +35,7 @@ while {alive _unit} do {
 								};
 								[_unit, _x select 0, _x select 1] call CBA_fnc_addMagazine;
 								_currentammo = _unit call zsn_fnc_playerammo;
-								playsound "weap_ar_drop";
+								for "_x" from 1 to 16 do {playsound "rearm"};
 								sleep 0.5;
 							};
 						} foreach _compatiblemagsinbox;

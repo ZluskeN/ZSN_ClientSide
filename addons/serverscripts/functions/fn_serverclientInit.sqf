@@ -19,7 +19,7 @@ if (leader _unit != _unit) then {
 
 if (isPlayer _unit && hasinterface) then {
 
-	if (isClass(configFile >> "CfgPatches" >> "AGC") && ZSN_AGCPlayers) then {removeFromRemainsCollector [_unit]};
+//	if (isClass(configFile >> "CfgPatches" >> "AGC") && ZSN_AGCPlayers) then {removeFromRemainsCollector [_unit]};
 
 } else {
 

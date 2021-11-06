@@ -81,6 +81,7 @@
 		"LIB_SVT_40"
 	];
 
+	_ammo = getNumber (configFile >> "CfgMagazines" >> _magazine >> "count");
 	_isBelt = isNumber (configFile >> "CfgMagazines" >> _magazine >> "ACE_isBelt") && {(getNumber (configFile >> "CfgMagazines" >> _magazine >> "ACE_isBelt")) == 1};
 	_isOpenBolt = isNumber (configFile >> "CfgWeapons" >> _weapon >> "ACE_overheating_closedBolt") && {(getNumber (configFile >> "CfgWeapons" >> _weapon >> "ACE_overheating_closedBolt")) == 0};
 	_bool = {if (_weapon isKindOf [_x, configFile >> "CfgWeapons"]) exitWith {true}; _ammo <= 6} forEach _blacklist;

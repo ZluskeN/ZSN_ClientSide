@@ -82,6 +82,10 @@ class CfgFunctions
 			{
 				file = "\zsn_serverscripts\functions\fn_serverInit.sqf";
 			};
+			class fireStarter
+			{
+				file = "\zsn_serverscripts\functions\fn_fireStarter.sqf";
+			};
 		};
 	};
 };
