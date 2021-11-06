@@ -56,29 +56,29 @@ class CfgVehicles {
                 displayName = "Plant Grenade";
                 selection = "kolp1";
                 distance = 2.0;
-                condition = "(('HandGrenade' in (magazines _player)) && (ZSN_GrenadeTrack))";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'kolp1'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackr_point', 1];};";
+                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'kolp1'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; if (((_this select 1) getHit 'hit_trackr_point') < 0.9) then {(_this select 1) setHit ['hit_trackr_point', (0.85 + random 0.15)]};};";
             };
             class ZSN_GrenadeTrackl1 {
                 displayName = "Plant Grenade";
                 selection = "koll1";
                 distance = 2.0;
-                condition = "(('HandGrenade' in (magazines _player)) && (ZSN_GrenadeTrack))";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'koll1'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackl_point', 1];};";
+                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'koll1'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; if (((_this select 1) getHit 'hit_trackl_point') < 0.9) then {(_this select 1) setHit ['hit_trackl_point', (0.85 + random 0.15)]};};";
             };
             class ZSN_GrenadeTrackp2 {
                 displayName = "Plant Grenade";
                 selection = "kolp2";
                 distance = 2.0;
-                condition = "(('HandGrenade' in (magazines _player)) && (ZSN_GrenadeTrack))";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'kolp2'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackr_point', 1];};";
+                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'kolp2'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; if (((_this select 1) getHit 'hit_trackr_point') < 0.9) then {(_this select 1) setHit ['hit_trackr_point', (0.85 + random 0.15)]};};";
             };
             class ZSN_GrenadeTrackl2 {
                 displayName = "Plant Grenade";
                 selection = "koll2";
                 distance = 2.0;
-                condition = "(('HandGrenade' in (magazines _player)) && (ZSN_GrenadeTrack))";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'koll2'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackl_point', 1];};";
+                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'koll2'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; if (((_this select 1) getHit 'hit_trackl_point') < 0.9) then {(_this select 1) setHit ['hit_trackl_point', (0.85 + random 0.15)]};};";
             };
         };
 	};
