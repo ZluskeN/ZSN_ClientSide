@@ -59,6 +59,10 @@ class CfgFunctions
 			{
 				file = "\zsn_clientscripts\functions\fn_addarsenal_ace.sqf";
 			};
+			class aloneWarning
+			{
+				file = "\zsn_clientscripts\functions\fn_aloneWarning.sqf";
+			};
 			class ammoLoop
 			{
 				file = "\zsn_clientscripts\functions\fn_ammoloop.sqf";
@@ -67,9 +71,17 @@ class CfgFunctions
 			{
 				file = "\zsn_clientscripts\functions\fn_armorShake.sqf";
 			};
+			class blockmags
+			{
+				file = "\zsn_clientscripts\functions\fn_blockmags.sqf";
+			};
 			class chambered
 			{
 				file = "\zsn_clientscripts\functions\fn_chambered.sqf";
+			};
+			class clearweapon
+			{
+				file = "\zsn_clientscripts\functions\fn_clearweapon.sqf";
 			};
 			class clientInit
 			{
@@ -94,6 +106,10 @@ class CfgFunctions
 			class randomWeapon
 			{
 				file = "\zsn_clientscripts\functions\fn_randomweapon.sqf";
+			};
+			class showgps
+			{
+				file = "\zsn_clientscripts\functions\fn_showgps.sqf";
 			};
 			class squat
 			{

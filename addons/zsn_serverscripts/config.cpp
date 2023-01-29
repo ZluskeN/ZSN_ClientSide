@@ -24,19 +24,27 @@ class CfgPatches
 		};
 	};
 };
+class CfgVehicles
+{
+	class Air;
+	class Helicopter: Air
+	{
+		class ACE_SelfActions
+		{
+			class live_radio_interface_open
+			{
+				displayName = "$STR_live_radio_interface_DisplayName";
+				statement = "_target call live_radio_interface_fnc_open";
+			};
+		};
+	};
+};
 class Extended_PreInit_EventHandlers 
 {
     class zsn_serversettings
 	{
         init = "call compile preprocessFileLineNumbers 'zsn_serverscripts\XEH_preInit.sqf'";
     };
-};
-class Extended_PostInit_EventHandlers
-{
-	class zsn_server_postinit
-	{
-		init = "_this call zsn_fnc_serverinit";
-	};
 };
 class Extended_InitPost_EventHandlers
 {
@@ -74,18 +82,59 @@ class CfgFunctions
 			{
 				file = "\zsn_serverscripts\functions\fn_hint.sqf";
 			};
-			class mgStance
+			class mgstancenerf
 			{
-				file = "\zsn_serverscripts\functions\fn_mgstance.sqf";
-			};
-			class serverInit
-			{
-				file = "\zsn_serverscripts\functions\fn_serverInit.sqf";
-			};
-			class fireStarter
-			{
-				file = "\zsn_serverscripts\functions\fn_fireStarter.sqf";
+				file = "\zsn_serverscripts\functions\fn_mgstancenerf.sqf";
 			};
 		};
 	};
 };
+class CfgRadioStations 
+{
+	class sr_p3 
+	{
+		name = "Sveriges Radio P3";
+		url = "https://http-live.sr.se/p1-mp3-192";
+	};
+	class uk1940s 
+	{
+		name = "1940s UK radio";
+		url = "https://solid2.streamupsolutions.com/proxy/rsbudoyu?mp=/;type=mp3";
+	};
+	class vietnamvet 
+	{
+		name = "Vietnam Vet Radio";
+		url = "http://74.82.59.197:8440/;";
+	};
+	class nectarine 
+	{
+		name = "Nectarine Demoscene";
+		url = "http://nectarine.from-de.com/necta192";
+	};
+	class electroswing 
+	{
+		name = "Electroswing Revolution Radio";
+		url = "https://streamer.radio.co/s2c3cc784b/listen";
+	};
+	class nightride 
+	{
+		name = "Nightride FM";
+		url = "https://nightride.fm/stream/nightride.mp3";
+	};
+	class chillsynth 
+	{
+		name = "Chillsynth FM";
+		url = "https://nightride.fm/stream/chillsynth.mp3";
+	};
+	class darksynth 
+	{
+		name = "Darksynth FM";
+		url = "https://nightride.fm/stream/darksynth.mp3";
+	};
+	class horrorsynth 
+	{
+		name = "Horrorsynth FM";
+		url = "https://nightride.fm/stream/horrorsynth.mp3";
+	};
+};
+

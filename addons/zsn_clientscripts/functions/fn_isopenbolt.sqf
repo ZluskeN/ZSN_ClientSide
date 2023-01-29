@@ -1,31 +1,41 @@
 
-	params ["_magazine", "_weapon", "_ammo", "_blacklist", "_whitelist", "_isBelt", "_isOpenBolt", "_boolean"];
+	params ["_unit", "_magazine", "_weapon", "_ammo", "_blacklist", "_whitelist", "_isBelt", "_isOpenBolt", "_boolean"];
 	
 	_blacklist = [
+		"gm_mg3_base",
+		"gm_mp2_base",
+		"gm_pm63_base",
+		"vn_m63a_lmg",
 		"vn_m1895",
 		"vn_m712",
+		"vn_lmg",
+		"vn_smg",
 		"vn_sks",
 		"CUP_SKS",
+		"CUP_UZI_Base",
 		"CUP_smg_M3A1",
-		"CUP_saw_base",
+//		"CUP_saw_base",
 		"CUP_sgun_AA12",
 		"CUP_Mac10_Base",
 		"CUP_hgun_Mac10_Base",
-		"CUP_srifle_LeeEnfield",
+//		"CUP_srifle_LeeEnfield",
 		"rhs_weap_M1garand_Base_F",
+		"rhs_weap_saw_base",
 		"rhs_weap_m3a1",
-		"rhs_weap_m249",
+		"UK3CB_Sten",
 		"sfp_kpistm45_base",
 		"sfp_cbj_ms_base",
-		"sfp_ksp90b",
+//		"sfp_ksp90b",
 		"hlc_saw_base",
 		"hlc_C96_base",
 		"SP_l4_lmg",
 		"SP_enfield_no4",
 		"SP_smg_sterling",
-		"sp_fwa_smg_mat49",
+		"sp_fwa_bren_base",
+		"sp_fwa_m1918a2_bar",
+		"sp_fwa_garand_base",
 		"sp_fwa_enfield_no4",
-		"sp_fwa_smg_sterling",
+		"sp_fwa_smg_9mm_base",
 		"cwr3_smg_sterling_sd",
 		"cwr3_smg_sterling",
 		"cwr3_glaunch_mm1",
@@ -36,7 +46,7 @@
 		"Uns_LMG",
 		"Uns_SMG",
 		"LIB_SMG",
-		"LIB_LMG",
+//		"LIB_LMG",
 		"LIB_M1895",
 		"LIB_M1896",
 		"LIB_M1_Garand",
@@ -56,6 +66,7 @@
 
 	_whitelist = [
 		"vn_pk",
+		"vn_vz61",
 		"gm_pk_base",
 		"CUP_lmg_PKM",
 		"CUP_srifle_ksvk",
@@ -64,30 +75,41 @@
 		"CUP_sgun_Saiga12K",
 		"CUP_sgun_M1014_base",
 		"CUP_srifle_AWM_Base",
+		"CUP_srifle_M107_Base",
 		"CUP_srifle_CZ550_base",
+		"CUP_srifle_CZ750_Base",
 		"CUP_srifle_M2010_BASE",
-		"FHQ_srifle_M2010_BASE",
 		"rhs_weap_XM2010_Base_F",
 		"rhs_weap_M590_5RD",
+		"rhs_weap_rpk_base",
 		"rhs_weap_t5000",
 		"rhs_pkp_base",
+		"ffp_kk_pkm",
+		"ffp_TKiv2000",
 		"hlc_AWC_base",
+		"uns_m1919a6",
+		"SP_enfield_l42",
+		"sp_fwa_enfield_l8",
+		"sp_fwa_enfield_l8t",
+		"sp_fwa_m1919a4_browning",
 		"hlc_rifle_saiga12k",
 		"fow_w_m1_carbine",
+		"fow_w_m1919",
 		"fow_w_stg44",
 		"fow_w_fg42",
 		"fow_w_g43",
 		"LIB_G43",
-		"LIB_SVT_40"
+		"LIB_SVT_40",
+		"LIB_M1919A4"
 	];
-
+	
 	_ammo = getNumber (configFile >> "CfgMagazines" >> _magazine >> "count");
 	_isBelt = isNumber (configFile >> "CfgMagazines" >> _magazine >> "ACE_isBelt") && {(getNumber (configFile >> "CfgMagazines" >> _magazine >> "ACE_isBelt")) == 1};
 	_isOpenBolt = isNumber (configFile >> "CfgWeapons" >> _weapon >> "ACE_overheating_closedBolt") && {(getNumber (configFile >> "CfgWeapons" >> _weapon >> "ACE_overheating_closedBolt")) == 0};
 	_bool = {if (_weapon isKindOf [_x, configFile >> "CfgWeapons"]) exitWith {true}; _ammo <= 6} forEach _blacklist;
 	if ((_isBelt OR _isOpenBolt) OR _bool) then {_bool = {if (_weapon isKindOf [_x, configFile >> "CfgWeapons"]) exitWith {false}; true} forEach _whitelist};
 	switch (_weapon) do {
-		case (primaryweapon player): {ZSN_PrimaryWeapon = _weapon; ZSN_PrimaryOpenBolt = _bool};
-		case (handgunweapon player): {ZSN_HandgunWeapon = _weapon; ZSN_HandgunOpenBolt = _bool};
+		case (primaryweapon _unit): {ZSN_PrimaryWeapon = _weapon; ZSN_PrimaryOpenBolt = _bool};
+		case (handgunweapon _unit): {ZSN_HandgunWeapon = _weapon; ZSN_HandgunOpenBolt = _bool};
 	};
 	_bool

@@ -6,7 +6,7 @@ if (ZSN_AllowArsenal) then {
 	];
 	["AmmoboxInit",[_box,false]] spawn BIS_fnc_arsenal;
 	_ua = [];
-		{
+	{
 		if ((configName _x) isKindoF "CAManBase") then {
 			_ua pushback (configName _x);
 		};

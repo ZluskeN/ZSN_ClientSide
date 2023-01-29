@@ -48,7 +48,26 @@ class Extended_InitPost_EventHandlers
 		};
 	};
 };
-class CfgVehicles {
+class CfgVehicles 
+{
+	class Man;
+	class CAManBase: Man
+	{
+		class ACE_SelfActions
+		{
+			class ACE_Equipment
+			{
+				class zsn_clearweapon
+				{
+					displayName = "Clear Current Weapon";
+					condition = "currentweapon _player in [primaryweapon _player, handgunweapon _player]";
+					statement = "[_player] spawn zsn_fnc_clearweapon";
+					showDisabled = 0;
+					exceptions[] = {"isNotSwimming", "isNotInside", "notOnMap", "isNotSitting"};
+				};
+			};
+		};
+	};
 	class LandVehicle;
     class Tank: LandVehicle {
         class ACE_Actions {
@@ -89,11 +108,23 @@ class CfgFunctions
 	{
 		class Functions
 		{
-			class aceclientInit
+			class aceClientInit
 			{
 				file = "\zsn_acescripts\functions\fn_aceclientInit.sqf";
 			};
-			class Hint
+			class aceServerInit
+			{
+				file = "\zsn_acescripts\functions\fn_aceserverInit.sqf";
+			};
+			class fireStarter
+			{
+				file = "\zsn_acescripts\functions\fn_fireStarter.sqf";
+			};
+			class getcontainercontents
+			{
+				file = "\zsn_acescripts\functions\fn_getcontainercontents.sqf";
+			};
+			class hint
 			{
 				file = "\zsn_acescripts\functions\fn_hint.sqf";
 			};
@@ -101,13 +132,25 @@ class CfgFunctions
 			{
 				file = "\zsn_acescripts\functions\fn_medicalItems.sqf";
 			};
-			class aceserverInit
+			class setcontainercontents
 			{
-				file = "\zsn_acescripts\functions\fn_aceserverInit.sqf";
+				file = "\zsn_acescripts\functions\fn_setcontainercontents.sqf";
 			};
-			class Spectator
+			class spawnstretcher
 			{
-				file = "\zsn_acescripts\functions\fn_spectator.sqf";
+				file = "\zsn_acescripts\functions\fn_spawnstretcher.sqf";
+			};
+			class unconscious
+			{
+				file = "\zsn_acescripts\functions\fn_unconscious.sqf";
+			};
+			class transfercontents
+			{
+				file = "\zsn_acescripts\functions\fn_transfercontents.sqf";
+			};
+			class transferloop
+			{
+				file = "\zsn_acescripts\functions\fn_transferloop.sqf";
 			};
 		};
 	};

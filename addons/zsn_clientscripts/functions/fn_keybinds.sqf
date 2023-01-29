@@ -12,6 +12,6 @@ if (isClass(configFile >> "CfgPatches" >> "ace_arsenal")) then {
 	["ZluskeN Utilities", "Add_Arsenal", "Create faction arsenal", {[("Land_Ammobox_rounds_F" createVehicle position player)] call zsn_fnc_addarsenal}, {}] call cba_fnc_addKeybind;
 };
 
-["ZluskeN Utilities", "Squat_Like_Slav", "Squat (Like Slav)", {if (side player == EAST) then {player spawn zsn_fnc_squat}}, {}] call cba_fnc_addKeybind;
+["ZluskeN Utilities", "Squat_Like_Slav", "Squat (Like Slav)", {player spawn zsn_fnc_squat}, {}] call cba_fnc_addKeybind;
 
 ["ZluskeN Utilities", "RandomWeapon", "Give random weapon", {player call zsn_fnc_randomweapon}, {}] call cba_fnc_addKeybind;
