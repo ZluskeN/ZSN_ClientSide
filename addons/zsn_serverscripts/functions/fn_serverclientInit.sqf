@@ -1,8 +1,8 @@
 params ["_unit"];
 
-if (isClass(configFile >> "CfgPatches" >> "dzn_MG_Tripod") && ZSN_AddTripod) then {
-	_unit call zsn_fnc_addtripod
-};
+//if (isClass(configFile >> "CfgPatches" >> "dzn_MG_Tripod") && ZSN_AddTripod) then {
+//	_unit call zsn_fnc_addtripod
+//};
 
 if (rank _unit in ["PRIVATE","CORPORAL","SERGEANT"]) then {
 	if (isClass(configFile >> "CfgPatches" >> "grad_trenches_main") && ZSN_AddShovel) then { 
@@ -18,13 +18,12 @@ if (rank _unit in ["PRIVATE","CORPORAL","SERGEANT"]) then {
 	};
 };
 
-if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
-	_weapon = currentweapon _unit;
-	if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_MGstanceThreshold && stance _unit == "STAND") then {_unit playAction "toMachinegun"};
-	["weapon", {[_this select 0, _this select 1] spawn zsn_fnc_mgstancenerf}] call CBA_fnc_addPlayerEventHandler;
-	_unit setvariable ["zsn_mgstancenerf", true];
-	[_unit, _weapon] spawn zsn_fnc_mgstancenerf;
-};
+//if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
+//	_weapon = currentweapon _unit;
+//	["weapon", {[_this select 0, _this select 1] spawn zsn_fnc_mgstancenerf}] call CBA_fnc_addPlayerEventHandler;
+//	_unit setvariable ["zsn_mgstancenerf", true];
+//	[_unit, _weapon] spawn zsn_fnc_mgstancenerf;
+//};
 
 _unit setUnitCombatMode ZSN_CombatMode;
 

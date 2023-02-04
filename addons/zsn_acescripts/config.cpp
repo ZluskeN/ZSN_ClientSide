@@ -154,4 +154,14 @@ class CfgFunctions
 			};
 		};
 	};
+	class rund
+	{
+		class Functions
+		{
+			class kickImpact
+			{
+				file = "\zsn_acescripts\functions\fn_kickimpact.sqf";
+			};
+		};
+	};
 };
