@@ -7,7 +7,7 @@ if (isClass(configFile >> "CfgPatches" >> "ace_hitreactions")) then {
 };
 
 if (isClass(configFile >> "CfgPatches" >> "ace_arsenal")) then {
-	["ZluskeN Utilities", "Add_Arsenal", "Create faction arsenal", {[("Land_HelipadEmpty_F" createVehicle position player)] call zsn_fnc_addarsenal_ace}, {}] call cba_fnc_addKeybind;
+	["ZluskeN Utilities", "Add_Arsenal", "Create faction arsenal", {[("Land_HelipadEmpty_F" createVehicle position player)] call zsn_fnc_addarsenal}, {}] call cba_fnc_addKeybind;
 } else {
 	["ZluskeN Utilities", "Add_Arsenal", "Create faction arsenal", {[("Land_Ammobox_rounds_F" createVehicle position player)] call zsn_fnc_addarsenal}, {}] call cba_fnc_addKeybind;
 };

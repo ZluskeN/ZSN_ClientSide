@@ -5,7 +5,7 @@ while {alive _unit} do {
 		ZSN_GPSPOS = createMarkerLocal [format ["%1",random 1000], getPosATL (_unit)];   
 		ZSN_GPSPOS setMarkerShapeLocal "ICON";      
 		ZSN_GPSPOS setMarkerTypeLocal "loc_move"; 
-		ZSN_GPSPOS setMarkerAlphaLocal 0.5;
+		ZSN_GPSPOS setMarkerAlphaLocal 0.66;
 		ZSN_GPSPOS setMarkerTextLocal "";
 		_markercolor = switch (side group _unit) do {
 			case west: {"ColorWEST"};

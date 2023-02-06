@@ -14,24 +14,9 @@ if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
 		};
 		if (_ms == CIVILIAN || !_willdrop) exitwith {};
 		if (_isUnconscious) then {
-			if (count weaponsItems _unit > 0) then {_unit call ace_hitreactions_fnc_throwWeapon};
+			if (primaryweapon _unit != "") then {_unit call ace_hitreactions_fnc_throwWeapon};
 		} else {
-			_unit remoteexec [{
-				params ["_unit","_containers","_container","_boxContents","_weapon"];
-				sleep 3;
-				if ((!(captive _unit) && primaryweapon _unit == "") && !(hasinterface && isplayer _unit)) then {
-					_containers = [];
-					{if ((weaponcargo _x) select 0 isKindOf ["Rifle_Base_F", configFile >> "CfgWeapons"]) then {_containers pushback _x};} forEach nearestObjects [_unit, ["ReammoBox", "ThingX"], 50];
-					if (count _containers > 0) then {
-						_containers = [_containers, [], {_unit distance _x}] call BIS_fnc_sortBy;
-						_container = _containers select 0;
-						_boxContents = weaponCargo _container;
-						_weapon = _boxContents select 0;
-						_unit action ["TakeWeapon", _container, _weapon];
-						[_unit, "Picked up a weapon", _weapon] remoteexec ["zsn_fnc_hint"];
-					};
-				};
-			}, _unit];
+			_unit remoteexec ["zsn_fnc_retrieveweapon", _unit];
 		};
 	}] call CBA_fnc_addEventHandler;
 	if (hasInterface) then {

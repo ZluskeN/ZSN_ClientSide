@@ -1,6 +1,6 @@
 params ["_unit","_delay","_mytime"];
 
-if (isPlayer _unit) then {
+if (hasInterface) then {
 	_delay = ZSN_UnconsciousTimer;
 	_mytime = time + _delay;
 	if (_delay > 0) then {
@@ -19,17 +19,19 @@ if (isPlayer _unit) then {
 					titleText ["", "BLACK IN"];
 				};
 				case "Respawn": {
-					titleText ["", "BLACK OUT"];
 					_oldplayer = _unit;
-					_grp = creategroup playerside;
-					(typeof _oldplayer) createUnit [[random 10, random 10, 0], _grp, "newplayer = this"];
-					selectplayer newplayer;
-					titleText ["", "BLACK IN"];
-					hideBody newplayer;
-					newplayer setdamage 1;
-					if (isClass(configFile >> "CfgPatches" >> "vurtual_seat")) then {
-						[_oldplayer] remoteexec ["zsn_fnc_spawnstretcher", 2];
-					};
+					_oldgrp = group _unit;
+					_oldplayer setCaptive true;
+					_newgrp = creategroup playerside;
+					(typeof _oldplayer) createUnit [[random 10, random 10, 0], _newgrp, "ZSN_newplayer = this"];
+					sleep 2;
+					selectplayer ZSN_newplayer;
+					hideBody ZSN_newplayer;
+					ZSN_newplayer setdamage 1;
+					ZSN_newplayer joinsilent _oldgrp;
+					cutText ["", "BLACK IN"];
+					[_oldplayer] joinsilent grpNull;
+					[_oldplayer] remoteexec ["zsn_fnc_spawnstretcher", 2];
 				};
 			};	
 		};

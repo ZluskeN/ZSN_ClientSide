@@ -1,4 +1,19 @@
+params ["_unit"];
+
 if (isServer) then {
+	if (rank _unit in ["PRIVATE","CORPORAL","SERGEANT"]) then {
+		if (isClass(configFile >> "CfgPatches" >> "grad_trenches_main") && ZSN_AddShovel) then { 
+			if (!("ACE_EntrenchingTool" in items _unit) && _unit canAdd "ACE_EntrenchingTool") then {_unit addItem "ACE_EntrenchingTool"};
+		};
+		if (isClass(configFile >> "CfgPatches" >> "RR_mapStuff") && (rank _unit == "PRIVATE" && ZSN_RemoveMaps)) then {
+			if (isPlayer _unit) then {
+				ZSN_missionstart = true;
+				addMissionEventHandler ["PreloadFinished", {if (ZSN_missionstart) then {player unlinkItem "itemMap"; ZSN_missionstart = false;}}];
+			} else {
+				_unit unlinkItem "itemMap";
+			};
+		};
+	};
 	if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
 		["ace_unconscious", {
 			params ["_unit", "_isUnconscious"];

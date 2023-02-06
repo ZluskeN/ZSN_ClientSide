@@ -20,7 +20,9 @@ class CfgPatches
 			"cba_main",
 			"cba_common",
 			"cba_settings",
-			"A3_anims_f"
+			"A3_anims_f",
+			"ace_arsenal",
+			"zsn_clientscripts"
 		};
 	};
 };
@@ -116,6 +118,10 @@ class CfgFunctions
 			{
 				file = "\zsn_acescripts\functions\fn_aceserverInit.sqf";
 			};
+			class addArsenal
+			{
+				file = "\zsn_acescripts\functions\fn_addarsenal_ace.sqf";
+			};
 			class fireStarter
 			{
 				file = "\zsn_acescripts\functions\fn_fireStarter.sqf";
@@ -131,6 +137,10 @@ class CfgFunctions
 			class medicalItems
 			{
 				file = "\zsn_acescripts\functions\fn_medicalItems.sqf";
+			};
+			class retreiveweapon
+			{
+				file = "\zsn_acescripts\functions\fn_retrieveweapon.sqf";
 			};
 			class setcontainercontents
 			{

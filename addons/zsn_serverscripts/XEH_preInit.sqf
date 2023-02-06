@@ -1,11 +1,5 @@
-["ZSN_CombatMode","LIST",["Set AI Combat Mode","Set default combat mode for AI"],"ZluskeN Server Settings",[["","GREEN","WHITE","YELLOW","RED"],["Unchanged","Hold fire, keep formation","Hold fire, engage at will","Fire at will, keep formation","Fire at will, engage at will"], 0],nil,{params ["_value"]; ZSN_CombatMode = _value;}] call CBA_fnc_addSetting;
-["ZSN_Unitpos","LIST",["Set AI Unit Position","Set default unit position for AI"],"ZluskeN Server Settings",[["","DOWN","UP","MIDDLE","AUTO"],["Unchanged","Prone","Stand Up","Keep Low","Follow Leader"], 2],		nil,{params ["_value"]; ZSN_Unitpos = _value;}] call CBA_fnc_addSetting;
 
-["ZSN_DisableTI",			"LIST",["Allow Thermal Imaging","Allow Thermal Imaging and Night Vision on vehicles"],"ZluskeN Server Settings",[["ON","NIGHT","OFF"],["Allowed","Only At Night","Not Allowed"], 1],	nil,{params ["_value"]; ZSN_DisableTI = _value; [] spawn zsn_fnc_disableNVG},true] call CBA_fnc_addSetting;
-["ZSN_Deadmarkers",			"CHECKBOX",	["Create Markers On Dead Units","Places a marker on all killed units"],								"ZluskeN Server Settings",False,										nil,{params ["_value"]; ZSN_Deadmarkers = _value;},true] call CBA_fnc_addSetting;
 
-["ZSN_AddShovel",			"CHECKBOX",	["Add Entrenching Tools","Soldiers start with Entrenching Tools (GRAD Trenches)"],					["ZluskeN Server Settings","Third Party Addon Settings"],False,			nil,{params ["_value"]; ZSN_AddShovel = _value;},true] call CBA_fnc_addSetting;
-["ZSN_RemoveMaps",			"CHECKBOX",	["Remove ItemMap","Only squad leaders get maps (RR Immersive Maps)"],								["ZluskeN Server Settings","Third Party Addon Settings"],False,			nil,{params ["_value"]; ZSN_RemoveMaps = _value;},true] call CBA_fnc_addSetting;
 
 //["ZSN_AddTripod",			"CHECKBOX",	["Give tripods to Machine Gunners","Heavy Machine Gunners will be given tripods (DZN Tripods)"],	["ZluskeN Server Settings","Third Party Addon Settings"],False,			nil,{params ["_value"]; ZSN_AddTripod = _value;},true] call CBA_fnc_addSetting;
 //["ZSN_MGstanceThreshold",	"SLIDER",	["Weapon Inertia Threshold","Weapons with inertia above this value can be carried low (GM)"],		["ZluskeN Server Settings","Third Party Addon Settings"],[0,2,0.9,1],	nil,{params ["_value"]; ZSN_MGstanceThreshold = _value;},true] call CBA_fnc_addSetting;

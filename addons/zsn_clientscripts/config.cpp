@@ -55,10 +55,6 @@ class CfgFunctions
 			{
 				file = "\zsn_clientscripts\functions\fn_addarsenal.sqf";
 			};
-			class addArsenal_ace
-			{
-				file = "\zsn_clientscripts\functions\fn_addarsenal_ace.sqf";
-			};
 			class aloneWarning
 			{
 				file = "\zsn_clientscripts\functions\fn_aloneWarning.sqf";
@@ -86,6 +82,10 @@ class CfgFunctions
 			class clientInit
 			{
 				file = "\zsn_clientscripts\functions\fn_clientInit.sqf";
+			};
+			class disableNVG
+			{
+				file = "\zsn_clientscripts\functions\fn_disableNVG.sqf";
 			};
 			class dropWeapon
 			{
