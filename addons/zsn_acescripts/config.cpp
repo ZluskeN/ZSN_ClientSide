@@ -138,7 +138,7 @@ class CfgFunctions
 			{
 				file = "\zsn_acescripts\functions\fn_medicalItems.sqf";
 			};
-			class retreiveweapon
+			class retrieveweapon
 			{
 				file = "\zsn_acescripts\functions\fn_retrieveweapon.sqf";
 			};

@@ -28,7 +28,7 @@ if (hasInterface) then {
 					selectplayer ZSN_newplayer;
 					hideBody ZSN_newplayer;
 					ZSN_newplayer setdamage 1;
-					ZSN_newplayer joinsilent _oldgrp;
+					[ZSN_newplayer] joinsilent _oldgrp;
 					cutText ["", "BLACK IN"];
 					[_oldplayer] joinsilent grpNull;
 					[_oldplayer] remoteexec ["zsn_fnc_spawnstretcher", 2];

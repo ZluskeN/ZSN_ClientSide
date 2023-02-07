@@ -1,6 +1,6 @@
 params ["_unit"]; 
 
-waitUntil {sleep 1; [_unit] call ace_medical_status_fnc_hasStableVitals}
+waitUntil {sleep 1; [_unit] call ace_medical_status_fnc_hasStableVitals};
 if (isClass(configFile >> "CfgPatches" >> "vurtual_seat")) then {
 	_pos = getpos _unit;
 	_dir = getDir _unit;
