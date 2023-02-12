@@ -4,6 +4,15 @@ _unit setUnitCombatMode ZSN_CombatMode;
 
 _unit setUnitPosWeak ZSN_Unitpos;
 
+if ((rank _unit == "PRIVATE" && leader _unit != _unit) && ZSN_RemoveMaps) then {
+	if (isPlayer _unit) then {
+		ZSN_missionstart = true;
+		addMissionEventHandler ["PreloadFinished", {if (ZSN_missionstart) then {player unlinkItem "itemMap"; ZSN_missionstart = false;}}];
+	} else {
+		_unit unlinkItem "itemMap";
+	};
+};
+
 _unit addEventHandler ["Killed",  
 {   
 	params ["_unit"];
@@ -147,6 +156,8 @@ if (isPlayer _unit && hasinterface) then {
 				};
 			};
 		};
+		if (isClass(configFile >> "CfgPatches" >> "Tun_Respawn") && ZSN_Tun_Respawn_OldGear) then {
+			_unit Call Tun_Respawn_fnc_savegear;
+		};
 	}];
-
 };

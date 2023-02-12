@@ -1,33 +1,30 @@
 params ["_unit"];
 
 if (isServer) then {
-	if (rank _unit in ["PRIVATE","CORPORAL","SERGEANT"]) then {
-		if (isClass(configFile >> "CfgPatches" >> "grad_trenches_main") && ZSN_AddShovel) then { 
-			if (!("ACE_EntrenchingTool" in items _unit) && _unit canAdd "ACE_EntrenchingTool") then {_unit addItem "ACE_EntrenchingTool"};
-		};
-		if (isClass(configFile >> "CfgPatches" >> "RR_mapStuff") && (rank _unit == "PRIVATE" && ZSN_RemoveMaps)) then {
-			if (isPlayer _unit) then {
-				ZSN_missionstart = true;
-				addMissionEventHandler ["PreloadFinished", {if (ZSN_missionstart) then {player unlinkItem "itemMap"; ZSN_missionstart = false;}}];
-			} else {
-				_unit unlinkItem "itemMap";
-			};
-		};
-	};
 	if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
-		["ace_unconscious", {
-			params ["_unit", "_isUnconscious"];
-			if (_isUnconscious) then {
-				if (isPlayer _unit) then {
-					_unit remoteexec ["zsn_fnc_unconscious", _unit];
-				};
-			};
-		}] call CBA_fnc_addEventHandler;
 		if (ZSN_MedicalItems) then {
 			{
 				if ([_x] call ace_medical_treatment_fnc_isMedicalVehicle) then {_x addItemCargoGlobal ['ace_PersonalAidKit', 1]}
 			} foreach vehicles;
 		};
+		["ace_unconscious", {
+			params ["_unit", "_isUnconscious","_willdrop"];
+			_willdrop = switch (ZSN_WeaponsDrop) do {
+				case "true": {true};
+				case "AI": {!(isplayer _unit)};
+				case "false": {false};
+			};
+			if (side group _unit == CIVILIAN) exitwith {};
+			if (_isUnconscious) then {
+				if (primaryweapon _unit != "" && _willdrop) then {_unit call ace_hitreactions_fnc_throwWeapon};
+				if (isPlayer _unit) then {_unit remoteexec ["zsn_fnc_unconscious", _unit]};
+			} else {
+				if (!isPlayer _unit) then {
+					_unit remoteexec ["zsn_fnc_retrieveweapon", _unit];
+//					_unit remoteexec ["zsn_fnc_spawnstretcher", _unit];
+				};
+			};
+		}] call CBA_fnc_addEventHandler;
 	};
 	["ace_interact_menu_newControllableObject", {
 		params ["_type"];

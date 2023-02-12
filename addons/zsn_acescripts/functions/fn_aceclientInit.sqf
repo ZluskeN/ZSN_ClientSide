@@ -3,22 +3,6 @@ params ["_unit"];
 if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
 	if (ZSN_MedicFacility && [_unit] call ace_common_fnc_isMedic) then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
 	if (ZSN_MedicalItems) then {_unit call zsn_fnc_medicalItems};
-	["ace_unconscious", {
-		params ["_unit","_isUnconscious","_willdrop","_ms","_time"];
-		_grp = group _unit;
-		_ms = side _grp;
-		_willdrop = switch (ZSN_WeaponsDrop) do {
-			case "true": {true};
-			case "AI": {!(isplayer _unit)};
-			case "false": {false};
-		};
-		if (_ms == CIVILIAN || !_willdrop) exitwith {};
-		if (_isUnconscious) then {
-			if (primaryweapon _unit != "") then {_unit call ace_hitreactions_fnc_throwWeapon};
-		} else {
-			_unit remoteexec ["zsn_fnc_retrieveweapon", _unit];
-		};
-	}] call CBA_fnc_addEventHandler;
 	if (hasInterface) then {
 		{
 			["ace_medical_treatment" + _x, {

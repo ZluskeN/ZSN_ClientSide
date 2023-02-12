@@ -1,3 +1,4 @@
+["ZSN_RemoveMaps",			"CHECKBOX",	["Remove ItemMap","Remove maps for units with Private rank"],												["ZluskeN Utilities Settings","Client Side"],False,			nil,{params ["_value"]; ZSN_RemoveMaps = _value;},true] call CBA_fnc_addSetting;
 ["ZSN_Clearweapon",			"CHECKBOX",	["Clear Primary Weapon","Player starts with cleared primary weapon"],										["ZluskeN Utilities Settings","Client Side"],True,			nil,{params ["_value"]; ZSN_Clearweapon = _value;},true] call CBA_fnc_addSetting;
 ["ZSN_Chamberedgun",		"CHECKBOX",	["Simulate chambered round","Simulate chambered rounds for closed-bolt weapons"],							["ZluskeN Utilities Settings","Client Side"],True,			nil,{params ["_value"]; ZSN_Chamberedgun = _value;},true] call CBA_fnc_addSetting;
 ["ZSN_AutoRearm",			"CHECKBOX",	["Automatic Rearm","Player will automatically pick up compatible magazines for their primary weapon"],		["ZluskeN Utilities Settings","Client Side"],True,			nil,{params ["_value"]; ZSN_AutoRearm = _value;},true] call CBA_fnc_addSetting;
@@ -14,3 +15,5 @@
 ["ZSN_Deadmarkers",			"CHECKBOX",	["Create Markers On Dead Units","Places a marker on all killed units"],										["ZluskeN Utilities Settings","Server Side"],False,			nil,{params ["_value"]; ZSN_Deadmarkers = _value;},true] call CBA_fnc_addSetting;
 ["ZSN_AllowRandomWeapon",	"CHECKBOX",	["Allow Random Weapon","Allow players to give themselves a random weapon"],									["ZluskeN Utilities Settings","Server Side"],False,			nil,{params ["_value"]; ZSN_AllowRandomWeapon = _value;}] call CBA_fnc_addSetting;
 ["ZSN_AllowArsenal",		"CHECKBOX",	["Allow Arsenal","Allow players to create faction Arsenal"],												["ZluskeN Utilities Settings","Server Side"],False,			nil,{params ["_value"]; ZSN_AllowArsenal = _value;}] call CBA_fnc_addSetting;
+
+["ZSN_Tun_Respawn_OldGear",	"CHECKBOX",	["Respawn with old gear","Players will respawn without replenished gear (TUN Respawn)"],	["ZluskeN Utilities Settings","Third Party Addon Settings"],False,			nil,{params ["_value"]; ZSN_Tun_Respawn_OldGear = _value;},true] call CBA_fnc_addSetting;
