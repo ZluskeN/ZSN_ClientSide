@@ -1,6 +1,6 @@
 params ["_unit"];	//Så kan det gå om inte haspen är på
 if (isPlayer _unit && hasInterface) then {
-	addCamShake [5, 2, 10]; // Shakes the camera for 1 second
+	addCamShake [20, 1, 5]; // Shakes the camera for 1 second
 	//playSound _någotRoligtLjud; To be determined
 	_funnyText = selectRandom [
 		"You feel a boot connect with the back of your head!",
