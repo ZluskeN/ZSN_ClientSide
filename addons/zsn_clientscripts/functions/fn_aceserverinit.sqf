@@ -1,31 +1,6 @@
 params ["_unit"];
 
 if (isServer) then {
-	if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
-		if (ZSN_MedicalItems) then {
-			{
-				if ([_x] call ace_medical_treatment_fnc_isMedicalVehicle) then {_x addItemCargoGlobal ['ace_PersonalAidKit', 1]}
-			} foreach vehicles;
-		};
-		["ace_unconscious", {
-			params ["_unit", "_isUnconscious","_willdrop"];
-			_willdrop = switch (ZSN_WeaponsDrop) do {
-				case "true": {true};
-				case "AI": {!(isplayer _unit)};
-				case "false": {false};
-			};
-			if (side group _unit == CIVILIAN) exitwith {};
-			if (_isUnconscious) then {
-				if (primaryweapon _unit != "" && _willdrop) then {_unit call ace_hitreactions_fnc_throwWeapon};
-				if (isPlayer _unit) then {_unit remoteexec ["zsn_fnc_unconscious", _unit]};
-			} else {
-				if (!isPlayer _unit) then {
-					_unit remoteexec ["zsn_fnc_retrieveweapon", _unit];
-//					_unit remoteexec ["zsn_fnc_spawnstretcher", _unit];
-				};
-			};
-		}] call CBA_fnc_addEventHandler;
-	};
 	["ace_interact_menu_newControllableObject", {
 		params ["_type"];
 		if (!(_type isKindOf "Tank")) exitWith {}; // lägg bara på handlingen i en vagn av den löst definerade kategorin "Tank"

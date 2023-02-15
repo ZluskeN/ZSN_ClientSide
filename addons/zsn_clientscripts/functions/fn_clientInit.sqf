@@ -2,7 +2,7 @@ params ["_unit"];
 
 _unit setUnitCombatMode ZSN_CombatMode;
 
-_unit setUnitPosWeak ZSN_Unitpos;
+if (ZSN_Unitpos) then {_unit setUnitPosWeak "UP"};
 
 if ((rank _unit == "PRIVATE" && leader _unit != _unit) && ZSN_RemoveMaps) then {
 	if (isPlayer _unit) then {
@@ -33,6 +33,20 @@ _unit addEventHandler ["Killed",
 		_m setMarkerText "";
 	};
 }];
+
+if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
+	if (ZSN_MedicFacility && [_unit] call ace_common_fnc_isMedic) then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
+	if (ZSN_MedicalItems) then {_unit call zsn_fnc_medicalItems};
+	if (hasInterface) then {
+		{
+			["ace_medical_treatment" + _x, {
+				if (lifeState ace_player == "INCAPACITATED") then {
+					titleText ["Someone is helping you", "PLAIN DOWN", 2, true, true];
+				};
+			}] call CBA_fnc_addEventHandler;
+		} foreach ["bandageLocal", "checkBloodPressureLocal", "cprLocal", "fullHealLocal", "ivBagLocal", "medicationLocal", "splintLocal", "tourniquetLocal"];	
+	}; 
+};
 
 if (isPlayer _unit && hasinterface) then {
 
