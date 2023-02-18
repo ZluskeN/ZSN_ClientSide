@@ -29,10 +29,10 @@ zsn_unitsideguns = switch (playerSide) do {
 };
 
 player addEventHandler ["InventoryOpened", {
-	params ["_unit", "_container","_containerhiddenmags","_unitsidemags","_containermags"];
+	params ["_unit","_container","_containerhiddenmags","_unitsidemags","_containermags"];
 	if (ZSN_Blockmags) then {
 		_containerhiddenmags = _container getvariable ["zsn_hiddenMags", []];
-		if (_containerhiddenmags == []) then {
+		if (count _containerhiddenmags == 0) then {
 			_unitsidemags = switch (zsn_unitsideguns) do {
 				case zsn_westweapons: {zsn_westmagazines};
 				case zsn_eastweapons: {zsn_eastmagazines};
@@ -49,7 +49,8 @@ player addEventHandler ["InventoryOpened", {
 			};
 			_container setvariable ["zsn_hiddenMags", _containerhiddenmags, true];
 			_container addEventHandler ["ContainerClosed", {
-				params ["_unit", "_container","_containerhiddenmags"];
+				params ["_container","_unit","_containerhiddenmags"];
+				_container lockInventory true;
 				_containerhiddenmags = _container getvariable ["zsn_hiddenMags", []];
 				if (_container iskindof "Man") then	{
 					{_container addMagazine _x} foreach _containerhiddenmags;
@@ -57,7 +58,8 @@ player addEventHandler ["InventoryOpened", {
 					{_container addMagazineAmmoCargo [_x select 0, 1, _x select 1]} foreach _containerhiddenmags;
 				};
 				_container setvariable ["zsn_hiddenMags", [], true];
-				_container removeEventHandler ["ContainerClosed", _thisID];
+				_container lockInventory false;
+				_container removeEventHandler [_thisEvent, _thisEventHandler];
 			}];
 		} else {
 			closeDialog 602; true
