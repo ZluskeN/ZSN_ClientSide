@@ -13,7 +13,7 @@ if (_magazine select 0 != "") then {
             if (isClass(configFile >> "CfgPatches" >> "ace_overheating")) then {playSound "ace_overheating_fixing_rifle"};
 			if (ZSN_PrimaryChambered) then {
 				ZSN_PrimaryChambered = false;
-				if (_unit canAdd _magazine) then {[_unit, _magazine select 0, 1, true] call CBA_fnc_addMagazine};
+				if (_unit canAdd (_magazine select 0)) then {[_unit, _magazine select 0, 1, true] call CBA_fnc_addMagazine};
 			};
 		}; 
 		case (handgunweapon _unit): {
@@ -21,7 +21,7 @@ if (_magazine select 0 != "") then {
             if (isClass(configFile >> "CfgPatches" >> "ace_overheating")) then {playSound "ace_overheating_fixing_pistol"};
 			if (ZSN_HandgunChambered) then {
 				ZSN_HandgunChambered = false;
-				if (_unit canAdd _magazine) then {[_unit, _magazine select 0, 1, true] call CBA_fnc_addMagazine};
+				if (_unit canAdd (_magazine select 0)) then {[_unit, _magazine select 0, 1, true] call CBA_fnc_addMagazine};
 			};
 		}; 
 	};

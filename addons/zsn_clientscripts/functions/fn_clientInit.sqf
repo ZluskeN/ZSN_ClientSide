@@ -50,6 +50,8 @@ if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
 
 if (isPlayer _unit && hasinterface) then {
 
+	zsn_startammo = _unit call zsn_fnc_playerammo; 
+
 	call zsn_fnc_blockmags;
 
 	_unit call zsn_fnc_chambered;
@@ -64,7 +66,17 @@ if (isPlayer _unit && hasinterface) then {
 
 	_unit addEventHandler ["Respawn", {
 		params ["_unit", "_corpse"];
+		
 		_unit call zsn_fnc_chambered;
+
+		_unit spawn zsn_fnc_ammoloop;
+		
+		_unit spawn zsn_fnc_showgps;
+
+		_unit spawn zsn_fnc_armorshake;
+
+		_unit spawn zsn_fnc_alonewarning;
+
 	}];
 
 	_unit addEventHandler["Fired", {

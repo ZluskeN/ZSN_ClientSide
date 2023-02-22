@@ -1,7 +1,5 @@
 params ["_unit","_unitsidemags","_currentammo","_supplyboxes","_deadboxes","_compatiblemags","_box","_magazinesinbox","_compatiblemagsinbox"];
 
-zsn_startammo = _unit call zsn_fnc_playerammo; 
-
 while {alive _unit} do {
 	_currentweapon = primaryweapon _unit;
 	if (ZSN_AutoRearm && !(ZSN_Blockmags && !(_currentweapon in zsn_unitsideguns))) then {
