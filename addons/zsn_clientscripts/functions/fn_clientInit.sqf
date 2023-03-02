@@ -63,6 +63,8 @@ if (isPlayer _unit && hasinterface) then {
 	_unit spawn zsn_fnc_armorshake;
 
 	_unit spawn zsn_fnc_alonewarning;
+	
+	_unit addAction ["", {true}, [], 0, false, false, "DefaultAction", "if (getNumber (configFile >> 'CfgMagazines' >> currentmagazine _target >> 'ace_isbelt') == 1 && ZSN_NerfMG) then {speed _this > 0} else {false}"];
 
 	_unit addEventHandler ["Respawn", {
 		params ["_unit", "_corpse"];

@@ -17,7 +17,7 @@ if (isServer) then {
 		[_type, 1, ["ACE_SelfActions"], rund_kickAction, true] call ace_interact_menu_fnc_addActionToClass;
 	}] call CBA_fnc_addEventHandler;
 	if (isClass(configFile >> "CfgPatches" >> "wildfire_main") && isClass(configFile >> "CfgPatches" >> "ace_cookoff")) then {
-		["ace_cookoff_cookOff", zsn_fnc_fireStarter] call CBA_fnc_addEventHandler;
-		["ace_cookoff_cookOffBox", zsn_fnc_fireStarter] call CBA_fnc_addEventHandler;
+		["ace_cookoff_cookOff", {_this call zsn_fnc_fireStarter }] call CBA_fnc_addEventHandler;
+		["ace_cookoff_cookOffBox", {_this call zsn_fnc_fireStarter}] call CBA_fnc_addEventHandler;
 	};
 };
