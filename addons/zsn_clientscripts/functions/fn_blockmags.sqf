@@ -9,12 +9,13 @@ zsn_guerweapons = [];
 {
 	_unit = _x;
 	_weapon = primaryweapon _unit;
+	_weaponparents = [configFile >> "CfgWeapons" >> _weapon, true] call BIS_fnc_returnParents;
 	_magazines = [_weapon] call CBA_fnc_compatibleMagazines;
 	_magazines insert [-1, magazines _unit, true];
 	switch (side _unit) do {
-		case WEST: {{zsn_westmagazines pushBackUnique _x} foreach _magazines; zsn_westweapons pushBackUnique _weapon};
-		case EAST: {{zsn_eastmagazines pushBackUnique _x} foreach _magazines; zsn_eastweapons pushBackUnique _weapon};
-		case INDEPENDENT: {{zsn_guermagazines pushBackUnique _x} foreach _magazines; zsn_guerweapons pushBackUnique _weapon};
+		case WEST: {{zsn_westmagazines pushBackUnique _x} foreach _magazines; {zsn_westweapons pushBackUnique _x} foreach _weaponparents};
+		case EAST: {{zsn_eastmagazines pushBackUnique _x} foreach _magazines; {zsn_eastweapons pushBackUnique _x} foreach _weaponparents};
+		case INDEPENDENT: {{zsn_guermagazines pushBackUnique _x} foreach _magazines; {zsn_guerweapons pushBackUnique _x} foreach _weaponparents};
 		default {};
 	};
 } foreach allUnits;
