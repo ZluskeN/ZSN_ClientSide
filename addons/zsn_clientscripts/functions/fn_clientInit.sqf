@@ -13,6 +13,20 @@ if ((rank _unit == "PRIVATE" && leader _unit != _unit) && ZSN_RemoveMaps) then {
 	};
 };
 
+if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
+	if (ZSN_MedicFacility && [_unit] call ace_common_fnc_isMedic) then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
+	if (ZSN_MedicalItems && isPlayer _unit) then {_unit call zsn_fnc_medicalItems};
+	if (hasInterface) then {
+		{
+			["ace_medical_treatment" + _x, {
+				if (lifeState ace_player == "INCAPACITATED") then {
+					titleText ["Someone is helping you", "PLAIN DOWN", 2, true, true];
+				};
+			}] call CBA_fnc_addEventHandler;
+		} foreach ["bandageLocal", "checkBloodPressureLocal", "cprLocal", "fullHealLocal", "ivBagLocal", "medicationLocal", "splintLocal", "tourniquetLocal"];	
+	}; 
+};
+
 _unit addEventHandler ["Killed",  
 {   
 	params ["_unit"];
@@ -33,20 +47,6 @@ _unit addEventHandler ["Killed",
 		_m setMarkerText "";
 	};
 }];
-
-if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
-	if (ZSN_MedicFacility && [_unit] call ace_common_fnc_isMedic) then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
-	if (ZSN_MedicalItems) then {_unit call zsn_fnc_medicalItems};
-	if (hasInterface) then {
-		{
-			["ace_medical_treatment" + _x, {
-				if (lifeState ace_player == "INCAPACITATED") then {
-					titleText ["Someone is helping you", "PLAIN DOWN", 2, true, true];
-				};
-			}] call CBA_fnc_addEventHandler;
-		} foreach ["bandageLocal", "checkBloodPressureLocal", "cprLocal", "fullHealLocal", "ivBagLocal", "medicationLocal", "splintLocal", "tourniquetLocal"];	
-	}; 
-};
 
 if (isPlayer _unit && hasinterface) then {
 
@@ -78,6 +78,8 @@ if (isPlayer _unit && hasinterface) then {
 		_unit spawn zsn_fnc_armorshake;
 
 		_unit spawn zsn_fnc_alonewarning;
+		
+		_unit addAction ["", {hintSilent "You need to be stationary to use your Machine Gun"}, [], 0, false, false, "DefaultAction", "if (getNumber (configFile >> 'CfgMagazines' >> currentmagazine _target >> 'ace_isbelt') == 1 && (ZSN_NerfMG && vehicle _target == _target)) then {speed _target != 0} else {false}"];
 
 	}];
 

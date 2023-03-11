@@ -52,6 +52,13 @@ class Extended_InitPost_EventHandlers
 			init = "if (isServer) then {_this RemoteExecCall ['zsn_fnc_clientinit', _this select 0, true]};";
 		};
 	};
+	class LandVehicle
+	{
+		class zsn_vehicle_fuelloop
+		{
+			init = "if (isServer) then {_this RemoteExec ['zsn_fnc_fuelloop', _this select 0, true]};";
+		};
+	};
 };
 class CfgVehicles 
 {
@@ -133,17 +140,17 @@ class CfgFunctions
 			{
 				file = "\zsn_clientscripts\functions\fn_armorShake.sqf";
 			};
-			class blockmags
+			class blockMags
 			{
-				file = "\zsn_clientscripts\functions\fn_blockmags.sqf";
+				file = "\zsn_clientscripts\functions\fn_blockMags.sqf";
 			};
 			class chambered
 			{
 				file = "\zsn_clientscripts\functions\fn_chambered.sqf";
 			};
-			class clearweapon
+			class clearWeapon
 			{
-				file = "\zsn_clientscripts\functions\fn_clearweapon.sqf";
+				file = "\zsn_clientscripts\functions\fn_clearWeapon.sqf";
 			};
 			class clientInit
 			{
@@ -153,17 +160,13 @@ class CfgFunctions
 			{
 				file = "\zsn_clientscripts\functions\fn_disableNVG.sqf";
 			};
-			class dropWeapon
-			{
-				file = "\zsn_clientscripts\functions\fn_dropWeapon.sqf";
-			};
 			class fireStarter
 			{
 				file = "\zsn_clientscripts\functions\fn_fireStarter.sqf";
 			};
-			class Hint
+			class fuelLoop
 			{
-				file = "\zsn_clientscripts\functions\fn_hint.sqf";
+				file = "\zsn_clientscripts\functions\fn_fuelLoop.sqf";
 			};
 			class isOpenBolt
 			{
@@ -181,7 +184,7 @@ class CfgFunctions
 			{
 				file = "\zsn_clientscripts\functions\fn_randomweapon.sqf";
 			};
-			class showgps
+			class showGPS
 			{
 				file = "\zsn_clientscripts\functions\fn_showgps.sqf";
 			};
