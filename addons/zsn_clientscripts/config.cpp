@@ -49,14 +49,14 @@ class Extended_InitPost_EventHandlers
 		};
 		class zsn_client_initpost
 		{
-			init = "if (isServer) then {_this RemoteExecCall ['zsn_fnc_clientinit', _this select 0, true]};";
+			init = "if (isServer) then {_this RemoteExecCall ['zsn_fnc_clientinit', 0, true]}";
 		};
 	};
 	class LandVehicle
 	{
 		class zsn_vehicle_fuelloop
 		{
-			init = "if (isServer) then {_this RemoteExec ['zsn_fnc_fuelloop', _this select 0, true]};";
+			init = "_this spawn zsn_fnc_fuelloop";
 		};
 	};
 };

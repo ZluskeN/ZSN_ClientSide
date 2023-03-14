@@ -8,7 +8,7 @@
 
 ["ZluskeN Utilities", "RandomWeapon", "Give Random Weapon", {player call zsn_fnc_randomweapon}, {}] call cba_fnc_addKeybind;
 
-["ZluskeN Utilities", "Add_Arsenal", "Create Faction Arsenal", {player call zsn_fnc_addarsenal}, {}] call cba_fnc_addKeybind;
+["ZluskeN Utilities", "Add_Arsenal", "Create Faction Arsenal", {_arsenalholder = "Land_HelipadEmpty_F" createVehicle position player; [_arsenalholder] call zsn_fnc_addarsenal; deletevehicle _arsenalholder}, {}] call cba_fnc_addKeybind;
 
 if (isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
 	["ZluskeN Utilities", "Lower_MG", "Lower Weapon", {if (getNumber (configFile >> "CfgWeapons" >> primaryweapon player >> "inertia") >= 0.9) then {player playAction "toMachinegun"}}, {}] call cba_fnc_addKeybind;
