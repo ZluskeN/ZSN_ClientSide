@@ -22,3 +22,5 @@ if (isServer) then {
 	] call ace_interact_menu_fnc_createAction;		//Dela ut förmågan att utföra handlingen
 	[_type, 1, ["ACE_SelfActions"], rund_kickAction, true] call ace_interact_menu_fnc_addActionToClass;
 }] call CBA_fnc_addEventHandler;
+
+[] call zsn_fnc_stachegenerator;

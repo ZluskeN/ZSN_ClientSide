@@ -1,5 +1,7 @@
 params ["_unit"];
 
+ZSN_inertiaThreshold = 0.9;
+
 if (local _unit) then {
 
 	_unit setUnitCombatMode ZSN_CombatMode;
@@ -28,23 +30,38 @@ if (local _unit) then {
 			} foreach ["bandageLocal", "checkBloodPressureLocal", "cprLocal", "fullHealLocal", "ivBagLocal", "medicationLocal", "splintLocal", "tourniquetLocal"];	
 		}; 
 	};
-
+	
+	_unit addEventHandler ["AnimChanged", { 
+		params ["_unit", "_anim", "_weapon"];
+		_weapon = currentWeapon _unit;
+		if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
+			if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
+				if (_anim regexMatch "amovpercm.*" && isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
+					_unit playAction "toMachinegun";
+//					[_unit, "gm_AmovPercMstpSrasWmguDnon", ZSN_mgAnimChange] call ace_common_fnc_doAnimation;
+				};
+			};
+		};
+	}];
+	
 	_unit addEventHandler ["Killed",  
 	{   
 		params ["_unit"];
 		if (ZSN_Deadmarkers) then {
 			_side = side group _unit;
-			_markercolor = switch (_side) do {
+			_markerColor = switch (_side) do {
 				case west: {"ColorWEST"};
 				case east: {"ColorEAST"};
 				case resistance: {"ColorGUER"};
 				default {"Default"};
 			};
-			_markertype = selectRandom ["Contact_pencilTask1","Contact_pencilTask2","Contact_pencilTask3"];
+			_markerType = selectRandom ["Contact_pencilTask1","Contact_pencilTask2","Contact_pencilTask3"];
+			_markerDir = selectRandom [0, 90, 180, 270];
 			_m = createMarker[format ["%1",random 1000],getPosATL (_unit)];  
-			_m setMarkerShape "ICON";     
-			_m setMarkerType _markertype;
-			_m setMarkerColor _markercolor;  
+			_m setMarkerShape "ICON";
+			_m setMarkerDir _markerDir;
+			_m setMarkerType _markerType;
+			_m setMarkerColor _markerColor;  
 			_m setmarkerSize [.66,.66];   
 			_m setMarkerText "";
 		};
@@ -52,11 +69,11 @@ if (local _unit) then {
 
 	if (isPlayer _unit && hasinterface) then {
 
+		ZSN_MGNerfed = false;
+
 		zsn_startammo = _unit call zsn_fnc_playerammo; 
 		
-		ZSN_Walktime = time;
-
-		call zsn_fnc_blockmags;
+		[] call zsn_fnc_blockmags;
 
 		_unit call zsn_fnc_chambered;
 
@@ -68,7 +85,60 @@ if (local _unit) then {
 
 		_unit spawn zsn_fnc_alonewarning;
 		
-		//_unit addAction ["", {hintSilent "You need to be stationary to use your Machine Gun"}, [], 0, false, false, "DefaultAction", "if (getNumber (configFile >> 'CfgMagazines' >> currentmagazine _target >> 'ace_isbelt') == 1 && (ZSN_NerfMG && vehicle _target == _target)) then {speed _target != 0} else {false}"];
+		_unit addAction ["", {
+			params ["_target"];
+			_muzzle = currentmuzzle _target;
+			_magazine = getArray (configFile >> "CfgWeapons" >> _muzzle >> "magazines") select 0;
+			_isopenbolt = switch (_muzzle) do {
+				case (ZSN_PrimaryWeapon): {ZSN_PrimaryOpenBolt};
+				case (ZSN_HandgunWeapon): {ZSN_HandgunOpenBolt};
+				default {[_target, _magazine, _muzzle] call zsn_fnc_isopenbolt};
+			};
+			if (!_isopenbolt) then {
+				_target addWeaponItem [currentweapon _target, [_magazine, 1, _muzzle], true];
+				_target forceWeaponFire [_muzzle, currentWeaponMode _target];
+				switch (_muzzle) do {
+					case (primaryweapon _target): {
+						_target removePrimaryWeaponItem currentMagazine _target;
+						ZSN_PrimaryChambered = false;
+					};
+					case (handgunweapon _target): {
+						ZSN_HandgunChambered = false;
+					};
+					default {};
+				};
+			};
+		}, [], 0, false, false, "DefaultAction", "
+			currentmagazine _target == '' &&  {
+				switch (currentmuzzle _target) do {
+					case (ZSN_PrimaryWeapon): {ZSN_PrimaryChambered};
+					case (ZSN_HandgunWeapon): {ZSN_HandgunChambered};
+					default {false};
+				}
+			}
+		"];
+
+		_unit addEventHandler ["OpticsSwitch", {
+			params ["_unit", "_isADS"];
+			_weapon = currentWeapon _unit;
+			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
+				if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
+					if ((_isADS && currentVisionMode _unit != 1) && (vehicle _unit == _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
+				};
+			};
+		}];
+
+		_unit addEventHandler ["AnimChanged", { 
+			params ["_unit", "_anim", "_weapon"];
+			_weapon = currentWeapon _unit;
+			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
+				if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
+//					if (_anim regexMatch "amovpercm.*" || _anim regexMatch "gm_amovpercm.*mg.*") then {
+					if ((cameraView == "Gunner" && currentVisionMode _unit != 1) && (vehicle _unit == _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
+//					};
+				};
+			};
+		}];
 
 		_unit addEventHandler ["Respawn", {
 			params ["_unit", "_corpse"];
@@ -83,7 +153,38 @@ if (local _unit) then {
 
 			_unit spawn zsn_fnc_alonewarning;
 			
-			//_unit addAction ["", {hintSilent "You need to be stationary to use your Machine Gun"}, [], 0, false, false, "DefaultAction", "if (getNumber (configFile >> 'CfgMagazines' >> currentmagazine _target >> 'ace_isbelt') == 1 && (ZSN_NerfMG && vehicle _target == _target)) then {speed _target != 0} else {false}"];
+			_unit addAction ["", {
+				params ["_target"];
+				_muzzle = currentmuzzle _target;
+				_magazine = getArray (configFile >> "CfgWeapons" >> _muzzle >> "magazines") select 0;
+				_isopenbolt = switch (_muzzle) do {
+					case (ZSN_PrimaryWeapon): {ZSN_PrimaryOpenBolt};
+					case (ZSN_HandgunWeapon): {ZSN_HandgunOpenBolt};
+					default {[_target, _magazine, _muzzle] call zsn_fnc_isopenbolt};
+				};
+				if (!_isopenbolt) then {
+					_target addWeaponItem [currentweapon _target, [_magazine, 1, _muzzle], true];
+					_target forceWeaponFire [_muzzle, currentWeaponMode _target];
+					switch (_muzzle) do {
+						case (primaryweapon _target): {
+							_target removePrimaryWeaponItem currentMagazine _target;
+							ZSN_PrimaryChambered = false;
+						};
+						case (handgunweapon _target): {
+							ZSN_HandgunChambered = false;
+						};
+						default {};
+					};
+				};
+			}, [], 0, false, false, "DefaultAction", "
+				currentmagazine _target == '' &&  {
+					switch (currentmuzzle _target) do {
+						case (primaryweapon _target): {ZSN_PrimaryChambered};
+						case (handgunweapon _target): {ZSN_HandgunChambered};
+						default {false};
+					}
+				}
+			"];
 
 		}];
 
@@ -124,23 +225,19 @@ if (local _unit) then {
 				};
 			} else {
 				switch (_muzzle) do {
-					case (primaryweapon _unit): {ZSN_PrimaryChambered = true};
-					case (handgunweapon _unit): {ZSN_HandgunChambered = true};
+					case (primaryweapon _unit): {ZSN_PrimaryChambered = !_isopenbolt};
+					case (handgunweapon _unit): {ZSN_HandgunChambered = !_isopenbolt};
 				};
 			};
-			if (getNumber (configFile >> 'CfgMagazines' >> _magazine >> 'ace_isbelt') == 1 && ZSN_NerfMG) then {
+			if (ZSN_NerfMG && getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
 				_unit forceWalk true;
-				if (ZSN_Walktime < time + 1) then {
-					ZSN_Walktime = time + 2;
+				ZSN_Walktime = time + 2; 
+				if (!ZSN_MGNerfed) then {
 					_unit spawn {
-						_index = _unit addEventHandler ["OpticsSwitch", {
-							params ["_unit", "_isADS"]; 
-							if (_isADS) then {_unit switchCamera "Internal"};
-						}];
-						hint str _index;
-						waituntil {sleep 0.2; time > ZSN_Walktime};
-						if (isForcedWalk _this) then {_this forceWalk false};
-						_unit removeEventHandler ["OpticsSwitch", _index];
+						ZSN_MGNerfed = true;
+						waituntil {sleep 0.2; time > ZSN_Walktime}; 
+						_this forceWalk false; 
+						ZSN_MGNerfed = false;
 					};
 				};
 			};
@@ -190,6 +287,10 @@ if (local _unit) then {
 							_newcount = _newmagammo - 1;
 							if (_newcount > 0) then {
 								_unit setAmmo [_muzzle, _newcount];
+								switch (_muzzle) do {
+									case (primaryweapon _unit): {ZSN_PrimaryChambered = true};
+									case (handgunweapon _unit): {ZSN_HandgunChambered = true};
+								};
 							} else {
 								switch (_muzzle) do {
 									case (primaryweapon _unit): {ZSN_PrimaryChambered = false};

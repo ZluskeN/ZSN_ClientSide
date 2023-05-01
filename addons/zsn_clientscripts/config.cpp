@@ -113,6 +113,48 @@ class CfgVehicles
             };
         };
 	};
+	class Truck_01_base_F;
+	class B_Truck_01_transport_F: Truck_01_base_F {
+		class VehicleTransport
+		{
+			class Carrier
+			{
+				cargoAlignment[]			= { "front", "left" };				// Array of 2 elements defining alignment of vehicles in cargo space.
+																				// Possible values are left, right, center, front, back. Order is important.
+				cargoBayDimensions[]		= { {-0.68,0.67,-0.53}, {0.68,-5,2} };	// alternatively, positions in model space (since 2.08)
+				disableHeightLimit			= 0;								// If set to 1 disable height limit of transported vehicles
+				exits[]						= { {5,0,0}, {5,10,0} };			// alternatively, positions in model space (since 2.08)
+				loadingAngle				= 60;								// Maximal sector where cargo vehicle must be to for loading (in degrees).
+				loadingDistance				= 5;								// Maximal distance for loading in exit point (in meters).
+				maxLoadMass					= 10000;								// Maximum cargo weight (in Kg) which the vehicle can transport
+				parachuteClassDefault		= "B_Parachute_02_F";				// Type of parachute used when dropped in air. Can be overridden by parachuteClass in Cargo.
+				parachuteHeightLimitDefault	= 5;								// Minimal height above terrain when parachute is used. Can be overriden by parachuteHeightLimit in Cargo.
+				unloadingInterval			= 2;								// Time between unloading vehicles (in seconds)
+				cargoSpacing[]				= { 0, 0.15, 0 };					// Offset from X,Y,Z axes (in metres)
+			};
+		};
+	};
+	class UGV_01_base_F;
+	class B_UGV_01_F: UGV_01_base_F {
+		class VehicleTransport
+		{
+			class Carrier
+			{
+				cargoAlignment[]			= { "front", "left" };				// Array of 2 elements defining alignment of vehicles in cargo space.
+																				// Possible values are left, right, center, front, back. Order is important.
+				cargoBayDimensions[]		= { {-0.04,0.32,-1.28}, {0.94,-0.32,0.14} };	// alternatively, positions in model space (since 2.08)
+				disableHeightLimit			= 0;								// If set to 1 disable height limit of transported vehicles
+				exits[]						= { {5,0,0}, {5,10,0} };			// alternatively, positions in model space (since 2.08)
+				loadingAngle				= 60;								// Maximal sector where cargo vehicle must be to for loading (in de
+				loadingDistance				= 5;								// Maximal distance for loading in exit point (in meters).grees).
+				maxLoadMass					= 1000;								// Maximum cargo weight (in Kg) which the vehicle can transport
+				parachuteClassDefault		= "B_Parachute_02_F";				// Type of parachute used when dropped in air. Can be overridden by parachuteClass in Cargo.
+				parachuteHeightLimitDefault	= 5;								// Minimal height above terrain when parachute is used. Can be overriden by parachuteHeightLimit in Cargo.
+				unloadingInterval			= 2;								// Time between unloading vehicles (in seconds)
+				cargoSpacing[]				= { 0, 0.15, 0 };					// Offset from X,Y,Z axes (in metres)
+			};
+		};
+	};
 };
 class CfgFunctions
 {
@@ -191,6 +233,14 @@ class CfgFunctions
 			class squat
 			{
 				file = "\zsn_clientscripts\functions\fn_squat.sqf";
+			};
+			class stachegenerator
+			{
+				file = "\zsn_clientscripts\functions\fn_stachegenerator.sqf";
+			};
+			class womanizer
+			{
+				file = "\zsn_clientscripts\functions\fn_womanizer.sqf";
 			};
 		};
 	};

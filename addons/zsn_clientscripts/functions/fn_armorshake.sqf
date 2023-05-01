@@ -1,6 +1,6 @@
 params ["_unit"];
 
-while {alive _unit} do 
+while {alive _unit} do {
 	_shake = 0;
 	_nearbyvehicles = _unit nearEntities [["Tank"], 1000];
 	_nearbytanks = [_nearbyvehicles, [_unit], {_unit distance _x}, "ASCEND", {speed _x > 0}] call BIS_fnc_sortBy;
