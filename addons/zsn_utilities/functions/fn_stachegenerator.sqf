@@ -1,6 +1,6 @@
 params ["_unit"];
 if (_unit getvariable ["ZSN_isFemale", false]) exitWith {};
-if (typeName ZSN_Staches == "STRING") then {ZSN_Staches = ZSN_Staches splitstring ","};
+if (typeName ZSN_Staches == "STRING") then {ZSN_Staches = call compile ZSN_Staches};
 if (isClass(configFile >> "CfgPatches" >> "SP_Moustaches")) then {
 	switch (side _unit) do {
 		case west: {

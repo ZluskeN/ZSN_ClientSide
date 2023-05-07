@@ -9,7 +9,7 @@
 
 class CfgPatches
 {
-	class zsn_clientscripts
+	class zsn_gunplay
 	{
 		units[] = {};
 		weapons[] = {};
@@ -27,36 +27,22 @@ class CfgPatches
 };
 class Extended_PreInit_EventHandlers 
 {
-    class zsn_clientsettings
+    class zsn_gunplaysettings
 	{
-        init = "call compile preprocessFileLineNumbers 'zsn_clientscripts\XEH_preInit.sqf'";
+        init = "call compile preprocessFileLineNumbers 'zsn_gunplay\XEH_preInit.sqf'";
     };
-};
-class Extended_PostInit_EventHandlers
-{
-	class zsn_ace_postinit
-	{
-		init = "_this call zsn_fnc_aceserverinit";
-	};
 };
 class Extended_InitPost_EventHandlers
 {
 	class CAManBase
 	{
-		class zsn_client_keybind_init
+		class zsn_gp_keybind_init
 		{
-			init = "nul = [] execVM 'zsn_clientscripts\functions\fn_keyBinds.sqf'";
+			init = "nul = [] execVM 'zsn_gunplay\functions\fn_keyBinds.sqf'";
 		};
-		class zsn_client_initpost
+		class zsn_gp_initpost
 		{
-			init = "if (isServer) then {_this RemoteExecCall ['zsn_fnc_clientinit', 0, true]}";
-		};
-	};
-	class LandVehicle
-	{
-		class zsn_vehicle_fuelloop
-		{
-			init = "_this spawn zsn_fnc_fuelloop";
+			init = "if (isServer) then {_this RemoteExecCall ['zsn_fnc_gpclientinit', 0, true]}";
 		};
 	};
 };
@@ -137,48 +123,6 @@ class CfgVehicles
             };
         };
 	};
-	class Truck_01_base_F;
-	class B_Truck_01_transport_F: Truck_01_base_F {
-		class VehicleTransport
-		{
-			class Carrier
-			{
-				cargoAlignment[]			= { "front", "left" };				// Array of 2 elements defining alignment of vehicles in cargo space.
-																				// Possible values are left, right, center, front, back. Order is important.
-				cargoBayDimensions[]		= { {-0.68,0.67,-0.53}, {0.68,-5,2} };	// alternatively, positions in model space (since 2.08)
-				disableHeightLimit			= 0;								// If set to 1 disable height limit of transported vehicles
-				exits[]						= { {5,0,0}, {5,10,0} };			// alternatively, positions in model space (since 2.08)
-				loadingAngle				= 60;								// Maximal sector where cargo vehicle must be to for loading (in degrees).
-				loadingDistance				= 5;								// Maximal distance for loading in exit point (in meters).
-				maxLoadMass					= 10000;								// Maximum cargo weight (in Kg) which the vehicle can transport
-				parachuteClassDefault		= "B_Parachute_02_F";				// Type of parachute used when dropped in air. Can be overridden by parachuteClass in Cargo.
-				parachuteHeightLimitDefault	= 5;								// Minimal height above terrain when parachute is used. Can be overriden by parachuteHeightLimit in Cargo.
-				unloadingInterval			= 2;								// Time between unloading vehicles (in seconds)
-				cargoSpacing[]				= { 0, 0.15, 0 };					// Offset from X,Y,Z axes (in metres)
-			};
-		};
-	};
-	class UGV_01_base_F;
-	class B_UGV_01_F: UGV_01_base_F {
-		class VehicleTransport
-		{
-			class Carrier
-			{
-				cargoAlignment[]			= { "front", "left" };				// Array of 2 elements defining alignment of vehicles in cargo space.
-																				// Possible values are left, right, center, front, back. Order is important.
-				cargoBayDimensions[]		= { {-0.04,0.32,-1.28}, {0.94,-0.32,0.14} };	// alternatively, positions in model space (since 2.08)
-				disableHeightLimit			= 0;								// If set to 1 disable height limit of transported vehicles
-				exits[]						= { {5,0,0}, {5,10,0} };			// alternatively, positions in model space (since 2.08)
-				loadingAngle				= 60;								// Maximal sector where cargo vehicle must be to for loading (in de
-				loadingDistance				= 5;								// Maximal distance for loading in exit point (in meters).grees).
-				maxLoadMass					= 1000;								// Maximum cargo weight (in Kg) which the vehicle can transport
-				parachuteClassDefault		= "B_Parachute_02_F";				// Type of parachute used when dropped in air. Can be overridden by parachuteClass in Cargo.
-				parachuteHeightLimitDefault	= 5;								// Minimal height above terrain when parachute is used. Can be overriden by parachuteHeightLimit in Cargo.
-				unloadingInterval			= 2;								// Time between unloading vehicles (in seconds)
-				cargoSpacing[]				= { 0, 0.15, 0 };					// Offset from X,Y,Z axes (in metres)
-			};
-		};
-	};
 };
 class CfgFunctions
 {
@@ -186,99 +130,45 @@ class CfgFunctions
 	{
 		class Functions
 		{
-			class aceServerInit
-			{
-				file = "\zsn_clientscripts\functions\fn_aceserverInit.sqf";
-			};
 			class addArsenal
 			{
-				file = "\zsn_clientscripts\functions\fn_addarsenal_ace.sqf";
-			};
-			class aloneWarning
-			{
-				file = "\zsn_clientscripts\functions\fn_aloneWarning.sqf";
+				file = "\zsn_gunplay\functions\fn_addarsenal_ace.sqf";
 			};
 			class ammoLoop
 			{
-				file = "\zsn_clientscripts\functions\fn_ammoloop.sqf";
-			};
-			class armorShake
-			{
-				file = "\zsn_clientscripts\functions\fn_armorShake.sqf";
+				file = "\zsn_gunplay\functions\fn_ammoloop.sqf";
 			};
 			class blockMags
 			{
-				file = "\zsn_clientscripts\functions\fn_blockMags.sqf";
+				file = "\zsn_gunplay\functions\fn_blockMags.sqf";
 			};
 			class chambered
 			{
-				file = "\zsn_clientscripts\functions\fn_chambered.sqf";
+				file = "\zsn_gunplay\functions\fn_chambered.sqf";
 			};
 			class clearWeapon
 			{
-				file = "\zsn_clientscripts\functions\fn_clearWeapon.sqf";
+				file = "\zsn_gunplay\functions\fn_clearWeapon.sqf";
 			};
-			class clientInit
+			class gpClientInit
 			{
-				file = "\zsn_clientscripts\functions\fn_clientInit.sqf";
-			};
-			class disableNVG
-			{
-				file = "\zsn_clientscripts\functions\fn_disableNVG.sqf";
-			};
-			class fireStarter
-			{
-				file = "\zsn_clientscripts\functions\fn_fireStarter.sqf";
-			};
-			class fuelLoop
-			{
-				file = "\zsn_clientscripts\functions\fn_fuelLoop.sqf";
+				file = "\zsn_gunplay\functions\fn_gpClientInit.sqf";
 			};
 			class isOpenBolt
 			{
-				file = "\zsn_clientscripts\functions\fn_isopenbolt.sqf";
-			};
-			class medicalItems
-			{
-				file = "\zsn_clientscripts\functions\fn_medicalItems.sqf";
+				file = "\zsn_gunplay\functions\fn_isopenbolt.sqf";
 			};
 			class playerAmmo
 			{
-				file = "\zsn_clientscripts\functions\fn_playerammo.sqf";
+				file = "\zsn_gunplay\functions\fn_playerammo.sqf";
 			};
 			class randomWeapon
 			{
-				file = "\zsn_clientscripts\functions\fn_randomweapon.sqf";
-			};
-			class showGPS
-			{
-				file = "\zsn_clientscripts\functions\fn_showgps.sqf";
-			};
-			class squat
-			{
-				file = "\zsn_clientscripts\functions\fn_squat.sqf";
-			};
-			class stachegenerator
-			{
-				file = "\zsn_clientscripts\functions\fn_stachegenerator.sqf";
+				file = "\zsn_gunplay\functions\fn_randomweapon.sqf";
 			};
 			class throwrock
 			{
-				file = "\zsn_clientscripts\functions\fn_throwrock.sqf";
-			};
-			class womanizer
-			{
-				file = "\zsn_clientscripts\functions\fn_womanizer.sqf";
-			};
-		};
-	};
-	class rund
-	{
-		class Functions
-		{
-			class kickImpact
-			{
-				file = "\zsn_clientscripts\functions\fn_kickimpact.sqf";
+				file = "\zsn_gunplay\functions\fn_throwrock.sqf";
 			};
 		};
 	};
