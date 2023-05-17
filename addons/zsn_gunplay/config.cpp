@@ -72,7 +72,7 @@ class CfgVehicles
                 selection = "pelvis";
                 distance = 20;
                 condition = "(_target distance _player > 4 && [_player,_target,currentWeapon _target] call ace_interaction_fnc_canPassMagazine) && ([_target, 'VIEW', _player] checkVisibility [eyePos _player, aimPos _target] > 0 && ZSN_Throwing)";
-                statement = "[_player,_target,currentWeapon _target] call ace_interaction_fnc_PassMagazine; _player playActionNow 'ThrowGrenade'; playSound3D ['a3\sounds_f\characters\stances\grenade_throw1.wss', _player]";
+                statement = "[_player,_target,currentWeapon _target] call ace_interaction_fnc_PassMagazine; _player playActionNow 'ThrowGrenade'; playSound3D ['a3\sounds_f\characters\stances\grenade_throw1.wss', _player]; [] spawn {ZSN_Throwing = false; sleep 1; ZSN_Throwing = true;};";
                 icon = "a3\ui_f\data\igui\cfg\simpletasks\types\rearm_ca.paa";
 			};
             class ZSN_ThrowRock {
@@ -80,7 +80,7 @@ class CfgVehicles
                 selection = "head";
                 distance = 30;
                 condition = "(alive _target && _target distance _player > 4) && ([_target, 'VIEW', _player] checkVisibility [eyePos _player, aimPos _target] > 0 && ZSN_Throwing)";
-                statement = "_player playActionNow 'ThrowGrenade'; playSound3D ['a3\sounds_f\characters\stances\grenade_throw2.wss', _player]; if (isPlayer _target) then {[_player] remoteexeccall ['zsn_fnc_throwrock', _target]}";
+                statement = "_player playActionNow 'ThrowGrenade'; playSound3D ['a3\sounds_f\characters\stances\grenade_throw2.wss', _player]; if (isPlayer _target) then {[_player] remoteexeccall ['zsn_fnc_throwrock', _target]}; [] spawn {ZSN_Throwing = false; sleep 1; ZSN_Throwing = true;};";
                 icon = "a3\ui_f\data\igui\cfg\simpletasks\types\kill_ca.paa";
 				
 			};
@@ -94,32 +94,80 @@ class CfgVehicles
                 selection = "kolp1";
                 distance = 2.0;
                 icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
-                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_1.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'kolp1'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackr_point', 1]}";
+                condition = "((count ((magazines _player) arrayintersect ZSN_Grenades) > 0) && ZSN_GrenadeTrack)";
+                statement = "[_player,_target,'kolp1'] call zsn_fnc_grenadetrack";
             };
             class ZSN_GrenadeTrackl1 {
                 displayName = "Plant Grenade";
                 selection = "koll1";
                 distance = 2.0;
                 icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
-                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'koll1'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackl_point', 1]}";
+                condition = "((count ((magazines _player) arrayintersect ZSN_Grenades) > 0) && ZSN_GrenadeTrack)";
+                statement = "[_player,_target,'koll1'] call zsn_fnc_grenadetrack";
             };
             class ZSN_GrenadeTrackp2 {
                 displayName = "Plant Grenade";
                 selection = "kolp2";
                 distance = 2.0;
                 icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
-                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_3.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'kolp2'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackr_point', 1]}";
+                condition = "((count ((magazines _player) arrayintersect ZSN_Grenades) > 0) && ZSN_GrenadeTrack)";
+                statement = "[_player,_target,'kolp2'] call zsn_fnc_grenadetrack";
             };
             class ZSN_GrenadeTrackl2 {
                 displayName = "Plant Grenade";
                 selection = "koll2";
                 distance = 2.0;
                 icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
+                condition = "((count ((magazines _player) arrayintersect ZSN_Grenades) > 0) && ZSN_GrenadeTrack)";
+                statement = "[_player,_target,'koll2'] call zsn_fnc_grenadetrack";
+            };
+            class ZSN_GrenadeTrackpodkolol3 {
+                displayName = "Plant Grenade";
+                selection = "podkolol3";
+                distance = 2.0;
+                icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
+                condition = "((count ((magazines _player) arrayintersect ZSN_Grenades) > 0) && ZSN_GrenadeTrack)";
+                statement = "[_player,_target,'podkolol3'] call zsn_fnc_grenadetrack";
+            };
+            class ZSN_GrenadeTrackpodkolop3 {
+                displayName = "Plant Grenade";
+                selection = "podkolop3";
+                distance = 2.0;
+                icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
+                condition = "((count ((magazines _player) arrayintersect ZSN_Grenades) > 0) && ZSN_GrenadeTrack)";
+                statement = "[_player,_target,'podkolop3'] call zsn_fnc_grenadetrack";
+            };
+            class ZSN_GrenadeTrackSprocket1 {
+                displayName = "Plant Grenade";
+                selection = "sprocket_wheel_1_1";
+                distance = 2.0;
+                icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
                 condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
-                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_4.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'koll2'];	_player removeMagazine 'HandGrenade'; [_nade, _target] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hit_trackl_point', 1]}";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_4.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'sprocket_wheel_1_1'];	_player removeMagazine 'HandGrenade'; [_nade, _target, _player] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hitpoint_track_1', 1, true, (_this select 2)]}; [] spawn {ZSN_GrenadeTrack = false; sleep 1; ZSN_GrenadeTrack = true;};";
+            };
+            class ZSN_GrenadeTrackSprocket2 {
+                displayName = "Plant Grenade";
+                selection = "sprocket_wheel_1_2";
+                distance = 2.0;
+                icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
+                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_3.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'sprocket_wheel_1_2'];	_player removeMagazine 'HandGrenade'; [_nade, _target, _player] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hitpoint_track_2', 1, true, (_this select 2)]}; [] spawn {ZSN_GrenadeTrack = false; sleep 1; ZSN_GrenadeTrack = true;};";
+            };
+            class ZSN_GrenadeTrackIdler1 {
+                displayName = "Plant Grenade";
+                selection = "idler_wheel_1_1";
+                distance = 2.0;
+                icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
+                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_2.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'idler_wheel_1_1'];	_player removeMagazine 'HandGrenade'; [_nade, _target, _player] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hitpoint_track_1', 1, true, (_this select 2)]}; [] spawn {ZSN_GrenadeTrack = false; sleep 1; ZSN_GrenadeTrack = true;};";
+            };
+            class ZSN_GrenadeTrackIdler2 {
+                displayName = "Plant Grenade";
+                selection = "idler_wheel_1_2";
+                distance = 2.0;
+                icon = "a3\ui_f_curator\data\rsccommon\rscattributeinventory\filter_6_ca.paa";
+                condition = "(('HandGrenade' in (magazines _player)) && ZSN_GrenadeTrack)";
+                statement = "playSound3D ['A3\Sounds_F\weapons\Grenades\handgrenade_drops\handg_drop_Metal_1.wss', _player]; _nade = 'GrenadeHand' createVehicle getpos _player; _nade attachTo [_target, [0, 0, -1], 'idler_wheel_1_2'];	_player removeMagazine 'HandGrenade'; [_nade, _target, _player] spawn {waituntil{!alive (_this select 0)}; (_this select 1) setHit ['hitpoint_track_2', 1, true, (_this select 2)]}; [] spawn {ZSN_GrenadeTrack = false; sleep 1; ZSN_GrenadeTrack = true;};";
             };
         };
 	};
@@ -153,6 +201,10 @@ class CfgFunctions
 			class gpClientInit
 			{
 				file = "\zsn_gunplay\functions\fn_gpClientInit.sqf";
+			};
+			class grenadeTrack
+			{
+				file = "\zsn_gunplay\functions\fn_grenadeTrack.sqf";
 			};
 			class isOpenBolt
 			{

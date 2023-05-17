@@ -1,7 +1,5 @@
-params ["_unit"];	//Så kan det gå om inte haspen är på
-if (isPlayer _unit && hasInterface) then {
-	addCamShake [20, 1, 5]; // Shakes the camera for 1 second
-	//playSound _någotRoligtLjud; To be determined
+params ["_unit"];
+if (isPlayer _unit && hasInterface) then {	//Så kan det gå om inte haspen är på
 	_hitSound = selectrandom [
 		"a3\sounds_f\characters\human-sfx\person2\p2_hit_small_01.wss",
 		"a3\sounds_f\characters\human-sfx\person2\p2_hit_small_02.wss",
@@ -18,6 +16,7 @@ if (isPlayer _unit && hasInterface) then {
 	];
 	//"normal" cutText [""<t color='#ff0000' font='PuristaBold' size='2'>_funnyText</t>"", "PLAIN", 0.25, true, true];
 	[_unit, (0.05 + random 0.075), "head", "punch", (commander vehicle _unit)] call ace_medical_fnc_addDamageToUnit;
-	playSound3D [_hitSound, _unit];
+	addCamShake [20, 1, 5]; // Shakes the camera for 1 second
+	playSound3D [_hitSound, _unit];	//playSound _någotRoligtLjud; To be determined
 	hintSilent _funnyText;
 };
