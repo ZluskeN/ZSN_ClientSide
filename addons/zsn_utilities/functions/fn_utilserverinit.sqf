@@ -3,6 +3,33 @@ if (isServer) then {
 		["ace_cookoff_cookOff", {_this call zsn_fnc_fireStarter }] call CBA_fnc_addEventHandler;
 		["ace_cookoff_cookOffBox", {_this call zsn_fnc_fireStarter}] call CBA_fnc_addEventHandler;
 	};
+	["ace_loadCargo", {
+	params ["_object", "_vehicle"];
+		_massobject = getmass _object;
+		_massvehicle = getmass _vehicle;
+		_newmass = _massvehicle + _massobject;
+		_vehicle setvariable ["zsn_mass", _newmass];
+		if (ZSN_AdjustMass) then {
+			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
+		};
+	}] call CBA_fnc_addEventHandler;
+	["ace_unloadCargo", {
+		params ["_object", "_vehicle"];
+		_massobject = if (typeName _object == "STRING") then {
+			_obj = _object createvehicle [0,0,0];
+			_mass = getmass _obj;
+			deletevehicle _obj;
+			_mass
+		} else {
+			getmass _object;
+		};
+		_massvehicle = getMass _vehicle;
+		_newmass = _massvehicle - _massobject;
+		_vehicle setvariable ["zsn_mass", _newmass];
+		if (ZSN_AdjustMass) then {
+			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
+		};
+	}] call CBA_fnc_addEventHandler;
 };
 
 ["ace_interact_menu_newControllableObject", {

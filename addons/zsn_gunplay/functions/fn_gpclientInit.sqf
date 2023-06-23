@@ -152,7 +152,7 @@ if (local _unit) then {
 						case (handgunweapon _unit): {ZSN_HandgunChambered = false};
 					};
 				} else {
-					if (ZSN_Autoswitch) then {
+					if (ZSN_Autoswitch && currentweapon _unit != secondaryweapon _unit) then {
 						if (_unit ammo handgunweapon _unit > 1 && handgunweapon _unit != "hgun_Pistol_Signal_F") then {
 							if (((getpos (_unit findNearestEnemy getpos _unit)) distance (getpos _unit)) < 50) then {
 								_unit selectWeapon handgunWeapon _unit;

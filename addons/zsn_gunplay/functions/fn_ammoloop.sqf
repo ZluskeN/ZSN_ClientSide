@@ -20,7 +20,7 @@ while {alive _unit} do {
 					};
 					_compatiblemagsinbox = [];
 					_compatiblemags = [_currentweapon] call CBA_fnc_compatibleMagazines;
-					{if ((_x select 0) in _compatiblemags) then {_compatiblemagsinbox pushback _x}} foreach _magazinesinbox;
+					{if ((_x select 0) in _compatiblemags && (_x select 1) > 0) then {_compatiblemagsinbox pushback _x}} foreach _magazinesinbox;
 					if (count _compatiblemagsinbox > 0) then {
 						_compatiblemagsinbox = [_compatiblemagsinbox, [], {_x select 1}, "DESCEND"] call BIS_fnc_sortBy;
 						{
