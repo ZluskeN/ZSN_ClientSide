@@ -8,7 +8,6 @@ if (isServer) then {
 		_massobject = getmass _object;
 		_massvehicle = getmass _vehicle;
 		_newmass = _massvehicle + _massobject;
-		_vehicle setvariable ["zsn_mass", _newmass];
 		if (ZSN_AdjustMass) then {
 			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
 		};
@@ -25,10 +24,13 @@ if (isServer) then {
 		};
 		_massvehicle = getMass _vehicle;
 		_newmass = _massvehicle - _massobject;
-		_vehicle setvariable ["zsn_mass", _newmass];
 		if (ZSN_AdjustMass) then {
 			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
 		};
+	}] call CBA_fnc_addEventHandler;
+	["ace_common_setMass", {
+		params ["_object", "_mass"];
+		_object setvariable ["zsn_mass", _mass];
 	}] call CBA_fnc_addEventHandler;
 };
 
@@ -53,7 +55,9 @@ if (!isMultiplayer) then {
 	if (count units player > 2) then {
 		{if (_x != player && (getText (configFile >> "CfgVehicles" >> (typeof _x) >> "vehicleClass") != "MenStory")) then {_units pushback _x}} foreach units player;
 	} else {
-		{if (group _x != group player && (getText (configFile >> "CfgVehicles" >> (typeof _x) >> "vehicleClass") != "MenStory")) then {_units pushback _x}} foreach units (side player);
+		if (count units (side player) > 2) then {
+			{if (group _x != group player && (getText (configFile >> "CfgVehicles" >> (typeof _x) >> "vehicleClass") != "MenStory")) then {_units pushback _x}} foreach units (side player);
+		};
 	};
 	_unit = selectrandom _units;
 	_unit call zsn_fnc_womanizer;

@@ -66,7 +66,7 @@ if (local _unit) then {
 			_weapon = currentWeapon _unit;
 			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
 				if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
-					if ((_isADS && currentVisionMode _unit != 1) && (vehicle _unit == _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
+					if ((_isADS && currentVisionMode _unit != 1) && (isNull objectParent _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
 				};
 			};
 		}];
@@ -77,7 +77,7 @@ if (local _unit) then {
 			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
 				if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
 //					if (_anim regexMatch "amovpercm.*" || _anim regexMatch "gm_amovpercm.*mg.*") then {
-					if ((cameraView == "Gunner" && currentVisionMode _unit != 1) && (vehicle _unit == _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
+					if ((cameraView == "Gunner" && currentVisionMode _unit != 1) && (isNull objectParent _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
 //					};
 				};
 			};

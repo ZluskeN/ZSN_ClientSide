@@ -4,12 +4,14 @@ if (goggles _unit in ZSN_Staches) then {removeGoggles _unit};
 switch (str side _unit) do { 
 	case "WEST": { 
 		if (isClass(configFile >> "CfgPatches" >> "VX_Character") && _unit isUniformAllowed "VX_Uniform_NATO") then {
+			ZSN_faces pushback "Leona_Face";
 			if (isClass(configFile >> "CfgPatches" >> "Max_WS")) then {ZSN_faces pushback "max_faceWS1"};
 			if (isClass(configFile >> "CfgPatches" >> "female3_ICEMAN")) then {
-				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_03"];
+				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_02","B_female_bun_03","B_female_bun_04"];
 			};
-			_face = if (count ZSN_faces > 0) then {selectrandom ZSN_faces} else {removeHeadgear _unit; "Leona_Face"};
+			_face = selectrandom ZSN_faces;
 			_unit setface _face;
+			if (_face == "Leona_Face") then {removeHeadgear _unit};
 			_unit setvariable ["ZSN_isFemale", true, true];
 			_items = uniformitems _unit; 
 			_unit addUniform "VX_Uniform_NATO";
@@ -27,7 +29,7 @@ switch (str side _unit) do {
 				{ZSN_faces pushback _x} foreach  ["max_faceWS1","max_faceWS2","max_faceWS3","max_faceWS4","max_faceWS5","max_faceWS6","max_faceWS7","max_faceWS8","max_faceWS9","max_faceWS10"];
 			};
 			if (isClass(configFile >> "CfgPatches" >> "female3_ICEMAN")) then {
-				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_02","B_female_bun_03","B_female_bun_04"];
+				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_03"];
 			}; 
 			if (count ZSN_faces > 0) then {
 				_face = selectrandom ZSN_faces;
@@ -46,12 +48,14 @@ switch (str side _unit) do {
 	}; 
 	case "EAST": { 
 		if (isClass(configFile >> "CfgPatches" >> "VX_Character") && _unit isUniformAllowed "VX_Uniform_CSAT8") then {
+			ZSN_faces pushback "Leona_Face";
 			if (isClass(configFile >> "CfgPatches" >> "Max_WS")) then {ZSN_faces pushback "max_faceWS1"};
 			if (isClass(configFile >> "CfgPatches" >> "female3_ICEMAN")) then {
-				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_03"];
+				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_02","B_female_bun_03","B_female_bun_04"];
 			};
-			_face = if (count ZSN_faces > 0) then {selectrandom ZSN_faces} else {removeHeadgear _unit; "Leona_Face"};
+			_face = selectrandom ZSN_faces;
 			_unit setface _face;
+			if (_face == "Leona_Face") then {removeHeadgear _unit};
 			_unit setvariable ["ZSN_isFemale", true, true];
 			_items = uniformitems _unit; 
 			_unit addUniform "VX_Uniform_CSAT8"; 
@@ -69,7 +73,7 @@ switch (str side _unit) do {
 				{ZSN_faces pushback _x} foreach  ["max_faceWS1","max_faceWS2","max_faceWS3","max_faceWS4","max_faceWS5","max_faceWS6","max_faceWS7","max_faceWS8","max_faceWS9","max_faceWS10"];
 			};
 			if (isClass(configFile >> "CfgPatches" >> "female3_ICEMAN")) then {
-				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_02","B_female_bun_03","B_female_bun_04"];
+				{ZSN_faces pushback _x} foreach  ["B_female_bun_01","B_female_bun_03"];
 			}; 
 			if (count ZSN_faces > 0) then {
 				_face = selectrandom ZSN_faces;

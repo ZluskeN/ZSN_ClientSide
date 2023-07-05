@@ -59,6 +59,19 @@ if (local _unit) then {
 		};
 	}];
 
+	_unit addEventHandler ["InventoryOpened", { 
+		params ["_unit", "_container"]; 
+		if (goggles _container in zsn_staches) then { 
+			removeGoggles _container; 
+			_container addEventHandler ["ContainerClosed", { 
+				params ["_container", "_unit"]; 
+				_stache = _container getvariable "zsn_stache"; 
+				_container linkItem _stache;  
+				_container removeEventHandler [_thisEvent, _thisEventHandler];
+			}]; 
+		}; 
+	}];
+	
 	if (isPlayer _unit && hasinterface) then {
 
 		_unit spawn zsn_fnc_showgps;
@@ -67,18 +80,6 @@ if (local _unit) then {
 
 		_unit spawn zsn_fnc_alonewarning;
 		 
-		_unit addEventHandler ["InventoryOpened", { 
-			params ["_unit", "_container"]; 
-			if (goggles _container in zsn_staches) then { 
-				removeGoggles _container; 
-				_container addEventHandler ["ContainerClosed", { 
-					params ["_container", "_unit"]; 
-					_stache = _container getvariable "zsn_stache"; 
-					_container linkItem _stache;  
-					_container removeEventHandler [_thisEvent, _thisEventHandler];
-				}]; 
-			}; 
-		}];
 		_unit addEventHandler ["Respawn", {
 			params ["_unit", "_corpse"];
 
@@ -87,19 +88,9 @@ if (local _unit) then {
 			_unit spawn zsn_fnc_armorshake;
 
 			_unit spawn zsn_fnc_alonewarning;
-
-			_unit addEventHandler ["InventoryOpened", { 
-				params ["_unit", "_container"]; 
-				if (goggles _container in zsn_staches) then { 
-					removeGoggles _container; 
-					_container addEventHandler ["ContainerClosed", { 
-						params ["_container", "_unit"]; 
-						_stache = _container getvariable "zsn_stache"; 
-						_container linkItem _stache;  
-						_container removeEventHandler [_thisEvent, _thisEventHandler];
-					}]; 
-				}; 
-			}];
+			
 		}];
+		
 	};
+	
 };

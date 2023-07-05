@@ -70,8 +70,8 @@ class CfgVehicles
             class ZSN_ThrowMagazine {
                 displayName = "Throw magazine";
                 selection = "pelvis";
-                distance = 20;
-                condition = "(_target distance _player > 4 && [_player,_target,currentWeapon _target] call ace_interaction_fnc_canPassMagazine) && ([_target, 'VIEW', _player] checkVisibility [eyePos _player, aimPos _target] > 0 && ZSN_Throwing)";
+                distance = 30;
+                condition = "(_target distance _player > 5 && [_player,_target,currentWeapon _target] call ace_interaction_fnc_canPassMagazine) && ([_target, 'VIEW', _player] checkVisibility [eyePos _player, aimPos _target] > 0 && ZSN_Throwing)";
                 statement = "[_player,_target,currentWeapon _target] call ace_interaction_fnc_PassMagazine; _player playActionNow 'ThrowGrenade'; playSound3D ['a3\sounds_f\characters\stances\grenade_throw1.wss', _player]; [] spawn {ZSN_Throwing = false; sleep 1; ZSN_Throwing = true;};";
                 icon = "a3\ui_f\data\igui\cfg\simpletasks\types\rearm_ca.paa";
 			};
@@ -79,7 +79,7 @@ class CfgVehicles
                 displayName = "Throw rock";
                 selection = "head";
                 distance = 30;
-                condition = "(alive _target && _target distance _player > 4) && ([_target, 'VIEW', _player] checkVisibility [eyePos _player, aimPos _target] > 0 && ZSN_Throwing)";
+                condition = "(alive _target && _target distance _player > 5) && ([_target, 'VIEW', _player] checkVisibility [eyePos _player, aimPos _target] > 0 && ZSN_Throwing)";
                 statement = "_player playActionNow 'ThrowGrenade'; playSound3D ['a3\sounds_f\characters\stances\grenade_throw2.wss', _player]; if (isPlayer _target) then {[_player] remoteexeccall ['zsn_fnc_throwrock', _target]}; [] spawn {ZSN_Throwing = false; sleep 1; ZSN_Throwing = true;};";
                 icon = "a3\ui_f\data\igui\cfg\simpletasks\types\kill_ca.paa";
 				
