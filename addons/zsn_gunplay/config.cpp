@@ -218,6 +218,10 @@ class CfgFunctions
 			{
 				file = "\zsn_gunplay\functions\fn_randomweapon.sqf";
 			};
+			class squat
+			{
+				file = "\zsn_gunplay\functions\fn_squat.sqf";
+			};
 			class throwrock
 			{
 				file = "\zsn_gunplay\functions\fn_throwrock.sqf";

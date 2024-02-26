@@ -2,6 +2,8 @@
 	params ["_unit", "_magazine", "_weapon", "_ammo", "_blacklist", "_whitelist", "_isBelt", "_isOpenBolt", "_boolean"];
 	
 	_blacklist = [
+		"SPE_SMG",
+		"SPE_M1_Garand",
 		"gm_mg3_base",
 		"gm_mp2_base",
 		"gm_pm63_base",
@@ -65,6 +67,7 @@
 	];
 
 	_whitelist = [
+		"SPE_M1919A4",
 		"vn_pk",
 		"vn_vz61",
 		"gm_pk_base",

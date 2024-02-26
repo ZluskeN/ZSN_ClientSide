@@ -6,8 +6,9 @@
 ["ZSN_Throwing",			"CHECKBOX",	["Allow Throwing Rocks and Magazines","Players can throw magazines and rocks at each other"],				"ZluskeN Gunplay Settings",True,	nil,{params ["_value"]; ZSN_Throwing = _value;},false] call CBA_fnc_addSetting;
 ["ZSN_Autoswitch",			"CHECKBOX",	["Auto switch to handgun","Switch to handgun automatically when primary weapon runs out of ammo in combat"],"ZluskeN Gunplay Settings",True,	nil,{params ["_value"]; ZSN_AutoSwitch = _value;},false] call CBA_fnc_addSetting;
 ["ZSN_GrenadeTrack",		"CHECKBOX",	["Allow Planting of Grenades in Tank Tracks","Hand Grenades can be used to detrack enemy tanks (ACE)"],		"ZluskeN Gunplay Settings",True,	nil,{params ["_value"]; ZSN_GrenadeTrack = _value;},false] call CBA_fnc_addSetting;
-//["ZSN_AllowRandomWeapon",	"CHECKBOX",	["Allow Random Weapon","Allow players to give themselves a random weapon"],									"ZluskeN Gunplay Settings",False,	nil,{params ["_value"]; ZSN_AllowRandomWeapon = _value;},false] call CBA_fnc_addSetting;
 ["ZSN_AllowArsenal",		"CHECKBOX",	["Allow Arsenal","Allow players to create faction Arsenal"],												"ZluskeN Gunplay Settings",False,	nil,{params ["_value"]; ZSN_AllowArsenal = _value;},false] call CBA_fnc_addSetting;
+//["ZSN_AllowACEHeal",		"CHECKBOX",	["Allow Full ACE Heal","Allow players to give themselves a full ACE Heal"],							["ZluskeN Gunplay Settings","Cheats"],False,	nil,{params ["_value"]; ZSN_AllowACEHeal = _value;},false] call CBA_fnc_addSetting;
+//["ZSN_AllowRandomWeapon",	"CHECKBOX",	["Allow Random Weapon","Allow players to give themselves a random weapon"],							["ZluskeN Gunplay Settings","Cheats"],False,	nil,{params ["_value"]; ZSN_AllowRandomWeapon = _value;},false] call CBA_fnc_addSetting;
 
 ZSN_Grenades = [
 	"HandGrenade",

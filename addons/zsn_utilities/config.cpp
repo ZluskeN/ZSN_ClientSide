@@ -43,10 +43,6 @@ class Extended_InitPost_EventHandlers
 {
 	class CAManBase
 	{
-		class zsn_util_keybind_init
-		{
-			init = "nul = [] execVM 'zsn_utilities\functions\fn_keyBinds.sqf'";
-		};
 		class zsn_util_initpost
 		{
 			init = "if (isServer) then {_this RemoteExecCall ['zsn_fnc_utilclientinit', 0, true]}";
@@ -202,6 +198,10 @@ class CfgFunctions
 			{
 				file = "\zsn_utilities\functions\fn_aloneWarning.sqf";
 			};
+			class ammocounter
+			{
+				file = "\zsn_utilities\functions\fn_ammocounter.sqf";
+			};
 			class armorShake
 			{
 				file = "\zsn_utilities\functions\fn_armorShake.sqf";
@@ -225,10 +225,6 @@ class CfgFunctions
 			class showGPS
 			{
 				file = "\zsn_utilities\functions\fn_showgps.sqf";
-			};
-			class squat
-			{
-				file = "\zsn_utilities\functions\fn_squat.sqf";
 			};
 			class stachegenerator
 			{

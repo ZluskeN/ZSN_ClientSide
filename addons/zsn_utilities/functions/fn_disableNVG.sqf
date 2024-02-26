@@ -1,6 +1,6 @@
 _bool = switch (ZSN_DisableTI) do {
 	case "ON": {false};
-	case "NIGHT": {sunOrMoon != 0};
+	case "NIGHT": {sunOrMoon > 0};
 	case "OFF": {true};
 };
 {
@@ -10,5 +10,14 @@ _bool = switch (ZSN_DisableTI) do {
 		_x disableTIEquipment _bool;
 	};
 } foreach vehicles;
-sleep 10;
+_oldbool = _bool;
+waituntil {
+	sleep 10;
+	_newbool = switch (ZSN_DisableTI) do {
+		case "ON": {false};
+		case "NIGHT": {sunOrMoon > 0};
+		case "OFF": {true};
+	};
+	_newbool != _oldbool
+};
 [] spawn zsn_fnc_disableNVG;

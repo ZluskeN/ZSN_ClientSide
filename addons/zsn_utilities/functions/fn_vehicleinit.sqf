@@ -11,6 +11,11 @@ params ["_vehicle"];
 	_args set [1, cba_missionTime];
 }, 0, [_vehicle, cba_missionTime]] call CBA_fnc_addPerFrameHandler;
 
+_vehicle addEventHandler ["Fired", {
+	params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+	if (_ammo != "") then {[(str side _unit), _ammo] remoteexeccall ["zsn_fnc_ammocounter",0,true]};
+}];
+
 _vehicle setvariable ["zsn_mass", getmass _vehicle];
 {
 	_mass = _vehicle getvariable "zsn_mass";

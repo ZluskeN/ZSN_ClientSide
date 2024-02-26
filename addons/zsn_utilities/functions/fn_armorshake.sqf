@@ -11,7 +11,7 @@ while {alive _unit} do {
 			_num = (_mass/_dist)/20000;
 			_shake = _shake + _num;
 		} foreach _nearbytanks;
-		addCamShake [_shake, 3, 20];
-	};
+		if (_shake > 0.1) then {addCamShake [_shake, 3, 20]};
+		};
 	sleep 1;
 };

@@ -1,8 +1,27 @@
 if (isServer) then {
+
+	zsn_ammotypes = [];
+
+	addMissionEventHandler ["PlayerViewChanged", { 
+		params ["_oldUnit", "_newUnit", "_vehicleIn","_oldCameraOn", "_newCameraOn", "_uav" ]; 
+		if (unitIsUAV _newCameraOn) then {
+			_goggles = goggles _oldCameraOn;
+			_oldCameraOn unassignItem _goggles;
+			_oldcameraon setVariable ["ZSN_Goggles", _goggles];
+			_oldCameraOn addGoggles "G_Goggles_VR";
+		};
+		if (unitIsUAV _oldCameraOn) then {
+			removeGoggles _newCameraOn; 
+			_goggles = _newCameraOn getVariable "ZSN_Goggles";
+			_newCameraOn assignItem _goggles;
+		};
+	}];
+
 	if (isClass(configFile >> "CfgPatches" >> "wildfire_main") && isClass(configFile >> "CfgPatches" >> "ace_cookoff")) then {
 		["ace_cookoff_cookOff", {_this call zsn_fnc_fireStarter }] call CBA_fnc_addEventHandler;
 		["ace_cookoff_cookOffBox", {_this call zsn_fnc_fireStarter}] call CBA_fnc_addEventHandler;
 	};
+
 	["ace_loadCargo", {
 	params ["_object", "_vehicle"];
 		_massobject = getmass _object;
@@ -12,6 +31,7 @@ if (isServer) then {
 			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
 		};
 	}] call CBA_fnc_addEventHandler;
+
 	["ace_unloadCargo", {
 		params ["_object", "_vehicle"];
 		_massobject = if (typeName _object == "STRING") then {
@@ -28,10 +48,12 @@ if (isServer) then {
 			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
 		};
 	}] call CBA_fnc_addEventHandler;
+
 	["ace_common_setMass", {
 		params ["_object", "_mass"];
 		_object setvariable ["zsn_mass", _mass];
 	}] call CBA_fnc_addEventHandler;
+
 };
 
 ["ace_interact_menu_newControllableObject", {

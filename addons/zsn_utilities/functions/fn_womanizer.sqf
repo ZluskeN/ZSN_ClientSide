@@ -43,6 +43,13 @@ switch (str side _unit) do {
 				_unit setName [_newfullname, _newname, _fullname select 1];
 				if (isClass(configFile >> "CfgPatches" >> "Female_Voice_RU")) then {_unit setSpeaker "FemaleVoiceRU"};
 				if (isClass(configFile >> "CfgPatches" >> "rhsusf_main")) then {_unit setSpeaker "VX_Female01ENG"};
+				if (isClass(configFile >> "CfgPatches" >> "Max_WS")) then {
+					switch (faction _unit) do { 
+						case "BLU_T_F": {_unit addUniform (selectrandom ["WU_B_T_Soldier_F", "WU_B_T_Soldier_AR_F"])};
+						case "BLU_F": {_unit addUniform (selectrandom ["U_B_CombatUniform_mcam_W","U_B_CombatUniform_mcam_tshirt_W"])};
+						default {};
+					};
+				};
 			}; 
 		}; 
 	}; 
@@ -87,6 +94,13 @@ switch (str side _unit) do {
 				_unit setName [_newfullname, _newname, _fullname select 1];
 				if (isClass(configFile >> "CfgPatches" >> "rhsusf_main")) then {_unit setSpeaker "VX_Female01ENG"};
 				if (isClass(configFile >> "CfgPatches" >> "Female_Voice_RU")) then {_unit setSpeaker "FemaleVoiceRU"};
+				if (isClass(configFile >> "CfgPatches" >> "Max_WS")) then {
+					switch (faction _unit) do { 
+						case "OPF_T_F": {_unit addUniform "WU_O_T_Soldier_F"};
+						case "OPF_F": {_unit addUniform "WU_O_CombatUniform_ocamo"};
+						default {};
+					};
+				};
 			}; 
 		}; 
 	}; 
@@ -109,6 +123,7 @@ switch (str side _unit) do {
 			_unit setName [_newfullname, _newname, _fullname select 1];
 			if (isClass(configFile >> "CfgPatches" >> "Female_Voice_RU")) then {_unit setSpeaker "FemaleVoiceRU"};
 			if (isClass(configFile >> "CfgPatches" >> "rhsusf_main")) then {_unit setSpeaker "VX_Female01ENG"};
+			if (isClass(configFile >> "CfgPatches" >> "Max_WS") && faction _unit == "IND_F") then {_unit addUniform "WU_I_CombatUniform"};
 		}; 
 	}; 
 };

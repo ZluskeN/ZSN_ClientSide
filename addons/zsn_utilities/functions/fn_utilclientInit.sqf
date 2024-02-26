@@ -36,6 +36,12 @@ if (local _unit) then {
 		}; 
 	};
 	
+	_unit addEventHandler ["Fired", {
+		params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+		_side = str side _unit;
+		if (_ammo != "") then {[_side, _ammo] remoteexeccall ["zsn_fnc_ammocounter",2]};
+	}];
+
 	_unit addEventHandler ["Killed",  
 	{   
 		params ["_unit"];
@@ -73,6 +79,16 @@ if (local _unit) then {
 	}];
 	
 	if (isPlayer _unit && hasinterface) then {
+
+		//if (isClass(configFile >> "CfgPatches" >> "biggus_ringus")) then {
+			//_size = worldSize / 2;
+			//private _halo = "inst_01ring" createVehicleLocal _pos;
+			//private _model = getModelInfo _halo select 1; 
+			//deleteVehicle _halo; 
+			//private _simpleHalo = createSimpleObject [_model, _pos, true];
+			//_simpleHalo = createSimpleObject ["inst_01ring", getpos _unit, true];
+			//_simpleHalo setObjectScale 50;
+		//};
 
 		_unit spawn zsn_fnc_showgps;
 
