@@ -35,10 +35,10 @@ if (local _unit) then {
 		params ["_unit", "_anim", "_weapon"];
 		_weapon = currentWeapon _unit;
 		if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
-			if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
-				if (_anim regexMatch "amovpercm.*" && isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
-					_unit playAction "toMachinegun";
-//					[_unit, "gm_AmovPercMstpSrasWmguDnon", ZSN_mgAnimChange] call ace_common_fnc_doAnimation;
+			if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= 0.9) then {
+				if (_anim regexMatch ".*erc.*slow.*" && isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
+//					_unit playAction "toMachinegun";
+					[_unit, "gm_AmovPercMstpSrasWmguDnon", 2] call ace_common_fnc_doAnimation;
 				};
 			};
 		};

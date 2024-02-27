@@ -1,6 +1,6 @@
 params ["_unit"];
 
-ZSN_inertiaThreshold = 0.9;
+ZSN_massThreshold = 230;
 
 if (local _unit) then {
 
@@ -8,10 +8,9 @@ if (local _unit) then {
 		params ["_unit", "_anim", "_weapon"];
 		_weapon = currentWeapon _unit;
 		if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
-			if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
-				if (_anim regexMatch "amovpercm.*" && isClass(configFile >> "CfgPatches" >> "gm_core_animations")) then {
-					_unit playAction "toMachinegun";
-				};
+			_mass = _weapon call ace_arsenal_fnc_sortStatement_mass;
+			if ((_anim regexMatch ".*erc.*slow.*" || _anim == "AidlPercMstpSrasWrflDnon_AI") && (isClass(configFile >> "CfgPatches" >> "gm_core_animations") && _mass >= ZSN_massThreshold)) then {
+				[_unit, "gm_AmovPercMstpSrasWmguDnon", 2] call ace_common_fnc_doAnimation;
 			};
 		};
 	}];
@@ -65,7 +64,8 @@ if (local _unit) then {
 			params ["_unit", "_isADS"];
 			_weapon = currentWeapon _unit;
 			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
-				if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
+				_mass = _weapon call ace_arsenal_fnc_sortStatement_mass;
+				if (_mass >= ZSN_massThreshold) then {
 					if ((_isADS && currentVisionMode _unit != 1) && (isNull objectParent _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
 				};
 			};
@@ -75,10 +75,9 @@ if (local _unit) then {
 			params ["_unit", "_anim", "_weapon"];
 			_weapon = currentWeapon _unit;
 			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
-				if (getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
-//					if (_anim regexMatch "amovpercm.*" || _anim regexMatch "gm_amovpercm.*mg.*") then {
+				_mass = _weapon call ace_arsenal_fnc_sortStatement_mass;
+				if (_mass >= ZSN_massThreshold) then {
 					if ((cameraView == "Gunner" && currentVisionMode _unit != 1) && (isNull objectParent _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
-//					};
 				};
 			};
 		}];
@@ -166,7 +165,8 @@ if (local _unit) then {
 					case (handgunweapon _unit): {ZSN_HandgunChambered = !_isopenbolt};
 				};
 			};
-			if (ZSN_NerfMG && getNumber (configFile >> "CfgWeapons" >> _weapon >> "inertia") >= ZSN_inertiaThreshold) then {
+			_mass = _weapon call ace_arsenal_fnc_sortStatement_mass;
+			if (ZSN_NerfMG && _mass >= ZSN_massThreshold) then {
 				_unit forceWalk true;
 				ZSN_Walktime = time + 2; 
 				if (!ZSN_MGNerfed) then {
