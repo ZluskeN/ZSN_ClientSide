@@ -1,8 +1,12 @@
 params ["_unit"];
 
-ZSN_massThreshold = 200;
+ZSN_massThreshold = 165;
 
 if (local _unit) then {
+
+	if (primaryWeaponItems _unit select 2 == "optic_Hamr" && ZSN_ACEPiPScopes) then {_unit addPrimaryWeaponItem "ACE_optic_Hamr_PIP"};
+	if (primaryWeaponItems _unit select 2 == "optic_SOS" && ZSN_ACEPiPScopes) then {_unit addPrimaryWeaponItem "ACE_optic_SOS_PIP"};
+	if (primaryWeaponItems _unit select 2 == "optic_LRPS" && ZSN_ACEPiPScopes) then {_unit addPrimaryWeaponItem "ACE_optic_LRPS_PIP"};
 
 	_unit addEventHandler ["AnimChanged", { 
 		params ["_unit", "_anim", "_weapon"];
@@ -10,12 +14,12 @@ if (local _unit) then {
 		if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
 			_weaponcfg = configfile >> "CfgWeapons" >> _weapon;
 			_mass = _weaponcfg call ace_arsenal_fnc_sortStatement_mass;
-			if ((_anim regexMatch ".*erc.*slow.*" || _anim == "AidlPercMstpSrasWrflDnon_AI") && (isClass(configFile >> "CfgPatches" >> "gm_core_animations") && _mass >= ZSN_massThreshold)) then {
+			if ((_anim regexMatch ".*erc.*slow.*" || _anim == "AidlPercMstpSrasWrflDnon_AI") && (isClass(configFile >> "CfgPatches" >> "gm_core_animations") && _mass > ZSN_massThreshold)) then {
 				[_unit, "gm_AmovPercMstpSrasWmguDnon", 2] call ace_common_fnc_doAnimation;
 			};
 		};
 	}];
-	
+
 	if (isPlayer _unit && hasinterface) then {
 
 		ZSN_MGNerfed = false;
@@ -67,7 +71,7 @@ if (local _unit) then {
 			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
 				_weaponcfg = configfile >> "CfgWeapons" >> _weapon;
 				_mass = _weaponcfg call ace_arsenal_fnc_sortStatement_mass;
-				if (_mass >= ZSN_massThreshold) then {
+				if (_mass > ZSN_massThreshold) then {
 					if ((_isADS && currentVisionMode _unit != 1) && (isNull objectParent _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
 				};
 			};
@@ -79,7 +83,7 @@ if (local _unit) then {
 			if (_weapon == primaryweapon _unit && ZSN_NerfMG) then {
 				_weaponcfg = configfile >> "CfgWeapons" >> _weapon;
 				_mass = _weaponcfg call ace_arsenal_fnc_sortStatement_mass;
-				if (_mass >= ZSN_massThreshold) then {
+				if (_mass > ZSN_massThreshold) then {
 					if ((cameraView == "Gunner" && currentVisionMode _unit != 1) && (isNull objectParent _unit && speed _unit != 0)) then {_unit switchCamera "Internal"};
 				};
 			};
@@ -170,7 +174,7 @@ if (local _unit) then {
 			};
 			_weaponcfg = configfile >> "CfgWeapons" >> _weapon;
 			_mass = _weaponcfg call ace_arsenal_fnc_sortStatement_mass;
-			if (ZSN_NerfMG && _mass >= ZSN_massThreshold) then {
+			if (ZSN_NerfMG && _mass > ZSN_massThreshold) then {
 				_unit forceWalk true;
 				ZSN_Walktime = time + 2; 
 				if (!ZSN_MGNerfed) then {

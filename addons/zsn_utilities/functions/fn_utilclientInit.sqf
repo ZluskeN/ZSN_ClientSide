@@ -80,14 +80,15 @@ if (local _unit) then {
 	
 	if (isPlayer _unit && hasinterface) then {
 
-		//if (isClass(configFile >> "CfgPatches" >> "biggus_ringus")) then {
-			//_size = worldSize / 2;
-			//private _halo = "inst_01ring" createVehicleLocal _pos;
-			//private _model = getModelInfo _halo select 1; 
-			//deleteVehicle _halo; 
-			//private _simpleHalo = createSimpleObject [_model, _pos, true];
-			//_simpleHalo = createSimpleObject ["inst_01ring", getpos _unit, true];
-			//_simpleHalo setObjectScale 50;
+		//if (isClass(configFile >> "CfgPatches" >> "biggus_ringus")) then { 
+		//	_unit = player; 
+		//	_size = worldSize / 2; 
+		//	_pos = [getpos _unit select 0, getpos _unit select 1, 1650]; 
+		//	private _halo = "inst_01ring" createVehicleLocal _pos; 
+		//	private _model = getModelInfo _halo select 1;  
+		//	deleteVehicle _halo;  
+		//	private _simpleHalo = createSimpleObject [_model, _pos, true]; 
+		//	_simpleHalo setObjectScale 24; 
 		//};
 
 		_unit spawn zsn_fnc_showgps;
