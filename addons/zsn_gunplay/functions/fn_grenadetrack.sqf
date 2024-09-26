@@ -30,7 +30,8 @@ _track = switch (_selection) do {
 	case "idler_wheel_1_2": {["hitpoint_track_2"]};
 	
 };
-[_livenade, _target, _track, _unit] spawn {waituntil{!alive (_this select 0)}; {(_this select 1) setHit [_x, 1, true, (_this select 3)]} foreach (_this select 2)}; 
-[] spawn {ZSN_GrenadeTrack = false; sleep 2; ZSN_GrenadeTrack = true;};
-
-
+[{!alive (_this select 0)}, {{(_this select 1) setHit [_x, 1, true, (_this select 3)]} foreach (_this select 2)}, ["_livenade", "_target", "_track", "_unit"]] call CBA_fnc_waitUntilAndExecute;
+//[_livenade, _target, _track, _unit] spawn {waituntil{!alive (_this select 0)}; {(_this select 1) setHit [_x, 1, true, (_this select 3)]} foreach (_this select 2)}; 
+//[] spawn {ZSN_GrenadeTrack = false; sleep 2; ZSN_GrenadeTrack = true;};
+ZSN_GrenadeTrack = false;
+[{ZSN_GrenadeTrack = true}, [], 2] call CBA_fnc_waitAndExecute;

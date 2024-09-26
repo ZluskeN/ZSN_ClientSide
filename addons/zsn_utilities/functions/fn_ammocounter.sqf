@@ -1,7 +1,7 @@
 params ["_side","_ammo"];
 
 if (_side != "CIV") then {
-	_string = "ZSN_" + _ammo + _side;
+	_string = _ammo + "_" + _side;
 	_index = {if (_string == _x select 1) exitwith {_foreachIndex}} foreach zsn_ammotypes;
 	_value = if (isNil "_index") then {
 		_string = createMarker[_string,[0,0,0]];
@@ -26,7 +26,7 @@ if (_side != "CIV") then {
 
 	zsn_ammotypes pushback [_value, _string];
 	zsn_ammotypes sort false;
-	{(_x select 1) setmarkerpos [0, worldSize - (_foreachindex * 100)]} foreach zsn_ammotypes;
+	{(_x select 1) setmarkerpos [50, worldSize - (_foreachindex * 100) - 50]} foreach zsn_ammotypes;
 };
 switch (ZSN_Ammocounters) do {
 	case "NONE": {{[_x select 1, 0] remoteExecCall ["setMarkerAlphaLocal"];} foreach zsn_ammotypes};

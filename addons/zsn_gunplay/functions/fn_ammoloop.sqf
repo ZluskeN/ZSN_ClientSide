@@ -4,7 +4,8 @@ while {alive _unit} do {
 	_currentweapon = primaryweapon _unit;
 	if (ZSN_AutoRearm && !(ZSN_Blockmags && !(_currentweapon in zsn_unitsideguns))) then {
 		_currentammo = _unit call zsn_fnc_playerammo;
-		if (_currentammo < zsn_startammo) then {
+		_startammo = _unit getVariable "zsn_startammo";
+		if (_currentammo < _startammo) then {
 			_supplyboxes = _unit nearSupplies 3;
 			_deadboxes = [];
 			{if (!(_x iskindof "Man" && alive _x)) then {_deadboxes pushback _x}} foreach _supplyboxes;
@@ -29,7 +30,7 @@ while {alive _unit} do {
 								case true: {magazinesAmmo _box};
 								case false: {magazinesAmmoCargo _box};
 							};
-							if (((_x in _magazinesinbox) && (_box distance _unit <= 3)) && ((_unit canAdd (_x select 0)) && (_currentammo + (_x select 1) <= zsn_startammo))) then {
+							if (((_x in _magazinesinbox) && (_box distance _unit <= 3)) && ((_unit canAdd (_x select 0)) && (_currentammo + (_x select 1) <= _startammo))) then {
 								if (primaryweapon _unit != _currentweapon) exitwith {};
 								switch (_box iskindof "Man") do
 								{

@@ -1,7 +1,5 @@
 params ["_unit"];
 
-ZSN_inertiaThreshold = 0.9;
-
 if (local _unit) then {
 
 	_unit call zsn_fnc_stachegenerator;
@@ -53,14 +51,27 @@ if (local _unit) then {
 				case resistance: {"ColorGUER"};
 				default {"Default"};
 			};
-			_markerType = selectRandom ["Contact_pencilTask1","Contact_pencilTask2","Contact_pencilTask3"];
-			_markerDir = selectRandom [0, 90, 180, 270];
+			_markerSize = if (_side == civilian) then {
+				[.5,.5];
+			} else {
+				[.66,.66];
+			};
+			_markerType = if (_side == civilian) then {
+				"KIA";
+			} else {
+				selectRandom ["Contact_pencilTask1","Contact_pencilTask2","Contact_pencilTask3"];
+			};
+			_markerDir = if (_side == civilian) then {
+				0;
+			} else {
+				selectRandom [0, 90, 180, 270];
+			};
 			_m = createMarker[format ["%1",random 1000],getPosATL (_unit)];  
 			_m setMarkerShape "ICON";
 			_m setMarkerDir _markerDir;
 			_m setMarkerType _markerType;
+			_m setmarkerSize _markerSize;   
 			_m setMarkerColor _markerColor;  
-			_m setmarkerSize [.66,.66];   
 			_m setMarkerText "";
 		};
 	}];
@@ -91,20 +102,20 @@ if (local _unit) then {
 		//	_simpleHalo setObjectScale 24; 
 		//};
 
-		_unit spawn zsn_fnc_showgps;
+		_unit call zsn_fnc_showgps;
 
-		_unit spawn zsn_fnc_armorshake;
+		_unit call zsn_fnc_armorshake;
 
-		_unit spawn zsn_fnc_alonewarning;
+		_unit call zsn_fnc_alonewarning;
 		 
 		_unit addEventHandler ["Respawn", {
 			params ["_unit", "_corpse"];
 
-			_unit spawn zsn_fnc_showgps;
+			_unit call zsn_fnc_showgps;
 
-			_unit spawn zsn_fnc_armorshake;
+			_unit call zsn_fnc_armorshake;
 
-			_unit spawn zsn_fnc_alonewarning;
+			_unit call zsn_fnc_alonewarning;
 			
 		}];
 		

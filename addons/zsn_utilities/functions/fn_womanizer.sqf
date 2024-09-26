@@ -12,7 +12,6 @@ switch (str side _unit) do {
 			_face = selectrandom ZSN_faces;
 			_unit setface _face;
 			if (_face == "Leona_Face") then {removeHeadgear _unit};
-			_unit setvariable ["ZSN_isFemale", true, true];
 			_items = uniformitems _unit; 
 			_unit addUniform "VX_Uniform_NATO";
 			{_unit addItemToUniform _x} foreach _items; 
@@ -34,7 +33,6 @@ switch (str side _unit) do {
 			if (count ZSN_faces > 0) then {
 				_face = selectrandom ZSN_faces;
 				_unit setface _face;
-				_unit setvariable ["ZSN_isFemale", true, true];
 				_name = name _unit;
 				_newname = selectrandom ["Carter","Medrano"];
 				_fullname = _name splitString " ";
@@ -63,7 +61,6 @@ switch (str side _unit) do {
 			_face = selectrandom ZSN_faces;
 			_unit setface _face;
 			if (_face == "Leona_Face") then {removeHeadgear _unit};
-			_unit setvariable ["ZSN_isFemale", true, true];
 			_items = uniformitems _unit; 
 			_unit addUniform "VX_Uniform_CSAT8"; 
 			{_unit addItemToUniform _x} foreach _items; 
@@ -85,7 +82,6 @@ switch (str side _unit) do {
 			if (count ZSN_faces > 0) then {
 				_face = selectrandom ZSN_faces;
 				_unit setface _face;
-				_unit setvariable ["ZSN_isFemale", true, true];
 				_name = name _unit;
 				_newname = selectrandom ["Carter","Medrano"];
 				_fullname = _name splitString " ";
@@ -114,7 +110,6 @@ switch (str side _unit) do {
 		if (count ZSN_faces > 0) then {
 			_face = selectrandom ZSN_faces;
 			_unit setface _face;
-			_unit setvariable ["ZSN_isFemale", true, true];
 			_name = name _unit;
 			_newname = selectrandom ["Carter","Medrano"];
 			_fullname = _name splitString " ";

@@ -1,6 +1,7 @@
 if (isServer) then {
 
 	zsn_ammotypes = [];
+	zsn_shotsfired = "";
 
 	addMissionEventHandler ["PlayerViewChanged", { 
 		params ["_oldUnit", "_newUnit", "_vehicleIn","_oldCameraOn", "_newCameraOn", "_uav" ]; 
@@ -15,6 +16,12 @@ if (isServer) then {
 			_goggles = _newCameraOn getVariable "ZSN_Goggles";
 			_newCameraOn assignItem _goggles;
 		};
+	}];
+
+	addMissionEventHandler ["Ended", {
+		params ["_endType"];
+		{_string = (_x select 1) + ": " + str (_x select 0); zsn_shotsfired = zsn_shotsfired + "<br/>" + _string} foreach zsn_ammotypes;
+		missionNamespace setVariable ["zsn_shotsfired", zsn_shotsfired];
 	}];
 
 	if (isClass(configFile >> "CfgPatches" >> "wildfire_main") && isClass(configFile >> "CfgPatches" >> "ace_cookoff")) then {
@@ -73,6 +80,9 @@ if (isServer) then {
 }] call CBA_fnc_addEventHandler;
 
 if (!isMultiplayer) then {
+
+	[] call zsn_fnc_savelimiter;
+
 	_units = [];
 	if (count units player > 2) then {
 		{if (_x != player && (getText (configFile >> "CfgVehicles" >> (typeof _x) >> "vehicleClass") != "MenStory")) then {_units pushback _x}} foreach units player;
@@ -81,6 +91,10 @@ if (!isMultiplayer) then {
 			{if (group _x != group player && (getText (configFile >> "CfgVehicles" >> (typeof _x) >> "vehicleClass") != "MenStory")) then {_units pushback _x}} foreach units (side player);
 		};
 	};
-	_unit = selectrandom _units;
+	_uniforms = [];
+	{_uniforms pushback [(uniform _x), _x]} foreach _units;
+	_preloadedunit = {if (_x select 0 in ["VX_Uniform_NATO","WU_B_T_Soldier_F", "WU_B_T_Soldier_AR_F","U_B_CombatUniform_mcam_W","U_B_CombatUniform_mcam_tshirt_W","VX_Uniform_CSAT8","WU_O_T_Soldier_F","WU_O_CombatUniform_ocamo","WU_I_CombatUniform"]) exitwith {_x select 1}} foreach _uniforms;
+	_unit = if (isNil "_preloadedunit") then {selectrandom _units} else {_preloadedunit};
 	_unit call zsn_fnc_womanizer;
+
 };

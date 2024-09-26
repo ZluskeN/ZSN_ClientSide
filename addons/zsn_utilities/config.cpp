@@ -56,6 +56,14 @@ class Extended_InitPost_EventHandlers
 		};
 	};
 };
+class CfgDebriefingSections
+{
+	class ZSN_ShotsFired
+	{
+		title = "Shots Fired";
+		variable = "zsn_shotsfired";
+	};
+};
 class CfgVehicles 
 {
 	class Car_F;
@@ -221,6 +229,10 @@ class CfgFunctions
 			class medicalItems
 			{
 				file = "\zsn_utilities\functions\fn_medicalItems.sqf";
+			};
+			class savelimiter
+			{
+				file = "\zsn_utilities\functions\fn_savelimiter.sqf";
 			};
 			class showGPS
 			{

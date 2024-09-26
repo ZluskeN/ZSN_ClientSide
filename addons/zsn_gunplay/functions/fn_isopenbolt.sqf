@@ -90,6 +90,7 @@
 		"ffp_kk_pkm",
 		"ffp_TKiv2000",
 		"hlc_AWC_base",
+		"JCA_srifle_AWM_base_F",
 		"uns_m1919a6",
 		"SP_enfield_l42",
 		"sp_fwa_enfield_l8",
@@ -112,7 +113,7 @@
 	_bool = {if (_weapon isKindOf [_x, configFile >> "CfgWeapons"]) exitWith {true}; _ammo <= 6} forEach _blacklist;
 	if ((_isBelt OR _isOpenBolt) OR _bool) then {_bool = {if (_weapon isKindOf [_x, configFile >> "CfgWeapons"]) exitWith {false}; true} forEach _whitelist};
 	switch (_weapon) do {
-		case (primaryweapon _unit): {ZSN_PrimaryWeapon = _weapon; ZSN_PrimaryOpenBolt = _bool};
-		case (handgunweapon _unit): {ZSN_HandgunWeapon = _weapon; ZSN_HandgunOpenBolt = _bool};
+		case (primaryweapon _unit): {_unit setVariable ["ZSN_PrimaryWeapon", _weapon]; _unit setVariable ["ZSN_PrimaryOpenBolt", _bool]};
+		case (handgunweapon _unit): {_unit setVariable ["ZSN_HandgunWeapon", _weapon]; _unit setVariable ["ZSN_HandgunOpenBolt", _bool]};
 	};
 	_bool
