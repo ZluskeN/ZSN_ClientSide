@@ -36,7 +36,7 @@ if (local _unit) then {
 
 			_unit call zsn_fnc_chambered;
 
-			_unit spawn zsn_fnc_ammoloop;
+			_unit call zsn_fnc_ammoloop;
 
 			_unit addAction ["", {
 				params ["_target"];
@@ -52,7 +52,7 @@ if (local _unit) then {
 					default {[_target, _magazine, _muzzle] call zsn_fnc_isopenbolt};
 				};
 				_safety = _muzzle in (_target getVariable ["ace_safemode_safedWeapons", []]);
-				if (!(_isopenbolt || _safety)) then {
+				if (!(_isopenbolt || _safety) && _muzzle != "") then {
 					_target addWeaponItem [currentweapon _target, [_magazine, 1, _muzzle], true];
 					_target forceWeaponFire [_muzzle, currentWeaponMode _target];
 					switch (_muzzle) do {
@@ -130,7 +130,7 @@ if (local _unit) then {
 						default {[_target, _magazine, _muzzle] call zsn_fnc_isopenbolt};
 					};
 					_safety = _muzzle in (_target getVariable ["ace_safemode_safedWeapons", []]);
-					if (!(_isopenbolt || _safety)) then {
+					if (!(_isopenbolt || _safety) && _muzzle != "") then {
 						_target addWeaponItem [currentweapon _target, [_magazine, 1, _muzzle], true];
 						_target forceWeaponFire [_muzzle, currentWeaponMode _target];
 						switch (_muzzle) do {

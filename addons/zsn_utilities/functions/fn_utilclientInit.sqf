@@ -19,8 +19,6 @@ if (local _unit) then {
 
 	if (isClass(configFile >> "CfgPatches" >> "ace_medical_engine")) then {
 	
-		_unit call zsn_fnc_medicalItems;
-		
 		if (ZSN_MedicFacility && [_unit] call ace_common_fnc_isMedic) then {_unit setVariable ["ace_medical_isMedicalFacility", true, true]};
 		
 		if (hasInterface) then {
@@ -102,14 +100,30 @@ if (local _unit) then {
 		//	_simpleHalo setObjectScale 24; 
 		//};
 
+		_unit addEventHandler ["Take", {
+			params ["_unit", "_container", "_item"];
+			if (_item == "FirstaidKit" && !isNil {"FirstAidKit" call ace_common_fnc_getItemReplacements}) then {
+				_unit call zsn_fnc_addpainkillers;
+			};
+		}];
+
 		_unit call zsn_fnc_showgps;
 
 		_unit call zsn_fnc_armorshake;
 
 		_unit call zsn_fnc_alonewarning;
 		 
+		[{_this call zsn_fnc_medicalItems}, _unit, 1] call CBA_fnc_waitAndExecute;
+
 		_unit addEventHandler ["Respawn", {
 			params ["_unit", "_corpse"];
+
+			_unit addEventHandler ["Take", {
+				params ["_unit", "_container", "_item"];
+				if (_item == "FirstaidKit" && !isNil {"FirstAidKit" call ace_common_fnc_getItemReplacements}) then {
+					_unit call zsn_fnc_addpainkillers;
+				};
+			}];
 
 			_unit call zsn_fnc_showgps;
 
@@ -117,6 +131,8 @@ if (local _unit) then {
 
 			_unit call zsn_fnc_alonewarning;
 			
+			[{_this call zsn_fnc_medicalItems}, _unit, 1] call CBA_fnc_waitAndExecute;
+
 		}];
 		
 	};

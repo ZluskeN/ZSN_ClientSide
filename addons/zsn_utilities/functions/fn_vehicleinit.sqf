@@ -21,13 +21,15 @@ if (alive _vehicle) then {
 	_vehicle setvariable ["zsn_mass", getmass _vehicle];
 	{
 		_mass = _vehicle getvariable "zsn_mass";
-		_vehicle setvariable ["zsn_mass", _mass + 100];
+		_guymass = ((_x getVariable  ["ace_movement_totalload", loadAbs _x]) / 22.046) + 80;
+		_vehicle setvariable ["zsn_mass", _mass + _guymass];
 	} foreach crew _vehicle;
 
 	_vehicle addEventHandler ["GetIn", { 
 		params ["_vehicle", "_role", "_unit", "_turret"]; 
 		_massvehicle = _vehicle getvariable "zsn_mass";
-		_newmass = _massvehicle + 100;
+		_guymass = ((_unit getVariable ["ace_movement_totalload", loadAbs _unit]) / 22.046) + 80;
+		_newmass = _massvehicle + _guymass;
 		if (ZSN_AdjustMass) then {
 			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
 		};
@@ -36,16 +38,20 @@ if (alive _vehicle) then {
 	_vehicle addEventHandler ["GetOut", { 
 		params ["_vehicle", "_role", "_unit", "_turret"]; 
 		_massvehicle = _vehicle getvariable "zsn_mass";
-		_newmass = _massvehicle - 100;
+		_guymass = ((_unit getVariable ["ace_movement_totalload", loadAbs _unit]) / 22.046) + 80;
+		_newmass = _massvehicle - _guymass;
 		if (ZSN_AdjustMass) then {
 			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
 		};
 	}];
 
 	_masshandle = [{
-		_mass = (_this select 0) getvariable "zsn_mass";
-		if (ZSN_AdjustMass && (alive (_this select 0) && getmass (_this select 0) != _mass)) then {
-			["ace_common_setMass", [(_this select 0), _mass]] call CBA_fnc_globalEvent;
+		params ["_vehicle"];
+		_mass = _vehicle getvariable "zsn_mass";
+		_cargomass = loadabs _vehicle / 22.046;
+		_newmass = _mass + _cargomass;
+		if (ZSN_AdjustMass && (alive _vehicle && getmass _vehicle != _newmass)) then {
+			["ace_common_setMass", [_vehicle, _newmass]] call CBA_fnc_globalEvent;
 		};
 	}, 10, _vehicle] call CBA_fnc_addPerFrameHandler;
 	_vehicle setVariable ["zsn_masshandler", _masshandle];

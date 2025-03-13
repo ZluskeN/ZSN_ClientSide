@@ -56,6 +56,25 @@ class Extended_InitPost_EventHandlers
 		};
 	};
 };
+class ace_medical_replacementItems {
+    ItemType_401[] = {
+        {"ACE_packingBandage", 3},
+        {"ACE_splint", 1}
+    };
+    ItemType_619[] = {
+        {"ACE_elasticBandage", 15},
+        {"ACE_tourniquet", 4},
+		{"ACE_suture", 20},
+        {"ACE_splint", 5},
+        {"ACE_bloodIV_500", 4},
+        {"ACE_adenosine", 3},
+        {"ACE_epinephrine", 7},
+        {"ACE_morphine", 5}
+    };
+    ACE_atropine[] = {
+        {"ACE_adenosine", 1}
+    };
+};
 class CfgDebriefingSections
 {
 	class ZSN_ShotsFired
@@ -202,11 +221,15 @@ class CfgFunctions
 	{
 		class Functions
 		{
+			class addPainkillers
+			{
+				file = "\zsn_utilities\functions\fn_addpainkillers.sqf";
+			};
 			class aloneWarning
 			{
 				file = "\zsn_utilities\functions\fn_aloneWarning.sqf";
 			};
-			class ammocounter
+			class ammoCounter
 			{
 				file = "\zsn_utilities\functions\fn_ammocounter.sqf";
 			};
@@ -230,7 +253,7 @@ class CfgFunctions
 			{
 				file = "\zsn_utilities\functions\fn_medicalItems.sqf";
 			};
-			class savelimiter
+			class saveLimiter
 			{
 				file = "\zsn_utilities\functions\fn_savelimiter.sqf";
 			};
@@ -238,11 +261,11 @@ class CfgFunctions
 			{
 				file = "\zsn_utilities\functions\fn_showgps.sqf";
 			};
-			class stachegenerator
+			class stacheGenerator
 			{
 				file = "\zsn_utilities\functions\fn_stachegenerator.sqf";
 			};
-			class utilclientInit
+			class utilClientInit
 			{
 				file = "\zsn_utilities\functions\fn_utilclientInit.sqf";
 			};
